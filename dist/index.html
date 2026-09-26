@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Arrange artworks along semantic dimensions that you draw." />
+    <title>art axes</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23d9dcff'/%3E%3Cpath d='M11 46L51 17M14 15L49 50' stroke='%23332f3d' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='7' fill='white'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://www.artic.edu" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell minimal-shell">
+      <header class="topbar minimal-topbar">
+        <div class="minimal-brand">
+          <span class="brand-cross" aria-hidden="true"></span>
+          <h1>art axes</h1>
+        </div>
+        <div class="header-actions">
+          <button id="collectionButton" class="button collection-button" type="button" aria-expanded="false" aria-controls="filterPanel">
+            collection <span id="collectionCount">142</span>
+          </button>
+          <button id="drawButton" class="button button-primary draw-button" type="button" aria-pressed="false">
+            <span class="plus">＋</span> draw axis
+          </button>
+        </div>
+      </header>
+
+      <section id="filterPanel" class="filter-panel" aria-label="Filter artwork collection" hidden>
+        <label class="filter-field filter-search">
+          <span>search</span>
+          <input id="collectionSearch" type="search" placeholder="artist, title, medium…" autocomplete="off" />
+        </label>
+        <label class="filter-field">
+          <span>type</span>
+          <select id="kindFilter">
+            <option value="all">all types</option>
+            <option value="painting">painting</option>
+            <option value="paper">works on paper</option>
+            <option value="sculpture">sculpture</option>
+            <option value="object">objects</option>
+            <option value="textile">textiles</option>
+            <option value="photography">photography</option>
+          </select>
+        </label>
+        <label class="filter-field">
+          <span>period</span>
+          <select id="eraFilter">
+            <option value="all">all periods</option>
+            <option value="ancient">before 1500</option>
+            <option value="pre1800">1500–1799</option>
+            <option value="1800s">1800–1899</option>
+            <option value="modern">1900 onward</option>
+          </select>
+        </label>
+        <div class="filter-footer">
+          <span id="filterSummary">142 available for the next axis</span>
+          <button id="clearFilters" class="text-button" type="button">clear</button>
+        </div>
+      </section>
+
+      <section class="workspace minimal-workspace">
+        <div class="canvas-wrap minimal-canvas-wrap">
+          <div id="artCanvas" class="art-canvas minimal-canvas" tabindex="0" aria-label="Artwork arrangement canvas">
+            <div id="worldLayer" class="world-layer">
+              <svg id="axisSvg" class="axis-svg" aria-hidden="true"></svg>
+              <div id="artLayer" class="art-layer"></div>
+            </div>
+            <div id="modelStatus" class="model-status" role="status" aria-live="polite" hidden></div>
+            <aside class="floating-axes" aria-label="Active dimensions">
+              <div class="floating-heading"><span>axes</span><strong id="axisCount">0</strong></div>
+              <div id="axisList" class="axis-list"></div>
+            </aside>
+            <div class="canvas-actions floating-actions">
+              <button id="zoomOutButton" class="zoom-button" type="button" title="zoom out" aria-label="zoom out">−</button>
+              <button id="zoomResetButton" class="zoom-level" type="button" title="reset zoom" aria-label="reset zoom">100%</button>
+              <button id="zoomInButton" class="zoom-button" type="button" title="zoom in" aria-label="zoom in">+</button>
+              <button id="resetButton" class="reset-button" type="button" title="reset view" aria-label="reset view">reset</button>
+            </div>
+            <div id="drawHint" class="draw-hint" hidden><b>drag to draw</b><span>release to name the axis</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <aside id="detailPanel" class="detail-panel" aria-hidden="true" aria-label="Artwork details">
+      <button id="closeDetail" class="panel-close" type="button" aria-label="Close artwork details">×</button>
+      <div id="detailContent"></div>
+    </aside>
+    <div id="backdrop" class="backdrop" hidden></div>
+
+    <dialog id="axisDialog" class="axis-dialog">
+      <form method="dialog" id="axisForm">
+        <h2>what sits at either end?</h2>
+        <div class="axis-input-row">
+          <label><span>Start</span><input id="startLabel" name="start" autocomplete="off" required /></label>
+          <span class="input-line" aria-hidden="true"></span>
+          <label><span>End</span><input id="endLabel" name="end" autocomplete="off" required /></label>
+        </div>
+        <div class="scope-field">
+          <span>artworks on this axis</span>
+          <div class="scope-static"><span>this filter</span><small id="axisScopeHint"></small></div>
+        </div>
+        <div class="dialog-actions">
+          <button value="cancel" class="button button-quiet" formnovalidate>Cancel</button>
+          <button id="addAxisButton" value="default" class="button button-primary">Place dimension</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="./artworks.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
