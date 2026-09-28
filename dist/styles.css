@@ -205,9 +205,24 @@ body { background: #fff; }
 .filter-field > span, .scope-field > span { color: var(--muted); font-size: .64rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
 .filter-field input, .filter-field select { width: 100%; min-height: 38px; border: 1px solid #ddd8e1; border-radius: 2px; background: #fff; padding: 7px 9px; color: var(--ink); font-family: inherit; font-size: .75rem; text-transform: lowercase; }
 .filter-field input:focus, .filter-field select:focus { outline: 2px solid #d9dcff; outline-offset: 1px; }
+.include-field { min-width: 0; margin: 0 0 13px; padding: 0; border: 0; }
+.include-field legend { margin-bottom: 7px; color: var(--muted); font-size: .64rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+.multi-filter { display: flex; flex-wrap: wrap; gap: 6px; }
+.custom-filter-options { display: contents; }
+.multi-filter label { position: relative; cursor: pointer; }
+.multi-filter input { position: absolute; opacity: 0; pointer-events: none; }
+.multi-filter label > span { display: block; max-width: 145px; overflow: hidden; padding: 7px 9px; border: 1px solid #ddd8e1; border-radius: 16px; color: #6e6875; background: #fff; font-size: .66rem; text-overflow: ellipsis; white-space: nowrap; transition: .15s; }
+.multi-filter label:hover > span { border-color: #aaa2b1; color: var(--ink); }
+.multi-filter input:checked + span { border-color: var(--ink); background: var(--ink); color: #fff; }
+.multi-filter .user-collection-option input:checked + span { border-color: #b982a0; background: #ffd6ea; color: var(--ink); }
+.multi-filter input:focus-visible + span { outline: 2px solid #d9dcff; outline-offset: 1px; }
+#kindFilterHint { display: block; margin-top: 7px; color: var(--muted); font-size: .58rem; }
 .filter-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 3px; color: var(--muted); font-size: .68rem; }
 .draw-button { min-height: 38px; padding: 0 14px; border-radius: 3px; border-color: var(--ink); background: #fff; color: var(--ink); font-size: .78rem; box-shadow: none; }
 .draw-button:hover, .button-primary[aria-pressed="true"] { background: #fff; color: var(--ink); }
+.upload-button { min-height: 38px; padding: 0 11px; border: 0; background: transparent; color: var(--muted); font-size: .72rem; }
+.upload-button:hover { color: var(--ink); transform: none; }
+.upload-plus { margin-right: 3px; color: var(--ink); font-size: .92rem; }
 .circle-button { width: 34px; height: 34px; display: grid; place-items: center; padding: 0; border: 1px solid rgba(23,23,21,.22); border-radius: 50%; background: rgba(255,255,255,.82); cursor: pointer; }
 .circle-button:hover { border-color: var(--ink); }
 .filter-menu { position: relative; font-size: .75rem; }
@@ -264,6 +279,46 @@ body { background: #fff; }
 .scope-static small { color: var(--muted); }
 .scope-field small { min-height: 1em; color: var(--muted); font-size: .68rem; }
 .source-link { color: var(--muted); font-size: .72rem; text-underline-offset: 3px; }
+.remove-art-button { margin-top: 22px; border: 0; background: transparent; color: #a76580; padding: 0; font-size: .68rem; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+.upload-dialog { width: min(560px, calc(100vw - 28px)); border: 1px solid var(--ink); padding: 0; background: #fff; color: var(--ink); box-shadow: var(--shadow); }
+.upload-dialog::backdrop { background: rgba(20,20,16,.35); backdrop-filter: blur(2px); }
+.upload-dialog form { padding: 24px; }
+.dialog-heading { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+.dialog-heading h2 { margin: 5px 0 0; font: 500 1.25rem/1.2 inherit; letter-spacing: -.03em; }
+.dialog-kicker { color: var(--muted); font-size: .6rem; }
+.dialog-close { width: 30px; height: 30px; border: 0; background: transparent; color: var(--muted); font-size: 1.25rem; cursor: pointer; }
+.dialog-close:hover { color: var(--ink); }
+.upload-dropzone { min-height: 170px; display: grid; place-items: center; overflow: hidden; border: 1px dashed #c9c2cf; background: #fbfafd; cursor: pointer; transition: border-color .15s, background .15s; }
+.upload-dropzone:hover, .upload-dropzone.dragging { border-color: #8f87a0; background: #f7f5fb; }
+.upload-dropzone input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.upload-placeholder { display: grid; gap: 7px; place-items: center; color: var(--muted); }
+.upload-placeholder[hidden], .upload-preview[hidden], .upload-field[hidden], .batch-title-note[hidden] { display: none !important; }
+.upload-placeholder::before { content: "↥"; display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid #d8d3dc; border-radius: 50%; color: var(--ink); font-size: 1rem; }
+.upload-placeholder b { color: var(--ink); font-size: .75rem; font-weight: 500; }
+.upload-placeholder small, .upload-preview small { font-size: .62rem; }
+.upload-choices { display: flex; gap: 6px; margin-top: 4px; }
+.upload-choices button { min-height: 30px; padding: 0 10px; border: 1px solid #d8d3dc; border-radius: 2px; background: #fff; color: #6e6875; font: .62rem inherit; cursor: pointer; }
+.upload-choices button:hover { border-color: var(--ink); color: var(--ink); }
+.upload-dropzone.has-selection { min-height: 132px; border-style: solid; background: #fff; }
+.upload-preview { width: 100%; height: 132px; grid-template-columns: 132px 1fr; align-items: center; gap: 18px; }
+.upload-preview:not([hidden]) { display: grid; }
+.upload-preview img { width: 132px; height: 132px; object-fit: cover; background: #eee; }
+.upload-preview span { min-width: 0; display: grid; gap: 7px; padding-right: 18px; }
+.upload-preview b { overflow: hidden; color: var(--ink); font-size: .72rem; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.upload-preview small { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.upload-fields { display: grid; grid-template-columns: 1fr 110px; gap: 13px 12px; margin-top: 18px; }
+.upload-title, .upload-collection { grid-column: 1 / -1; }
+.upload-field { display: grid; gap: 6px; }
+.upload-field > span { color: var(--muted); font-size: .62rem; }
+.upload-field input, .upload-field select { width: 100%; min-height: 39px; border: 1px solid #ddd8e1; border-radius: 2px; background: white; padding: 8px 9px; color: var(--ink); font: .74rem inherit; text-transform: lowercase; }
+.upload-field input:focus, .upload-field select:focus { outline: 2px solid #d9dcff; outline-offset: 1px; }
+.upload-error { margin: 12px 0 0; color: #a04c6e; font-size: .68rem; }
+.batch-title-note { grid-column: 1 / -1; margin: 0; padding: 10px; border: 1px solid #e8e3eb; background: #fbfafd; color: var(--muted); font-size: .65rem; }
+.upload-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-top: 20px; }
+.upload-footer > p { margin: 0 0 2px; color: var(--muted); font-size: .6rem; }
+.upload-footer .dialog-actions { margin: 0; }
+.upload-dialog[data-saving="true"] #addArtworkButton { opacity: .55; pointer-events: none; }
 
 @media (max-width: 760px) {
   .minimal-shell { min-height: 600px; }
@@ -273,6 +328,8 @@ body { background: #fff; }
   .minimal-canvas-wrap { height: calc(100vh - 64px); min-height: 536px; }
   .minimal-topbar #drawButton { width: auto; padding: 0 11px; font-size: .72rem; }
   .minimal-topbar #drawButton .plus { margin-right: 3px; font-size: 1rem; }
+  .upload-button { width: 36px; padding: 0; font-size: 0; }
+  .upload-plus { margin: 0; font-size: 1.05rem; }
   .collection-button { padding: 0 8px; font-size: 0; }
   .collection-button span { margin: 0; font-size: .66rem; }
   .filter-panel { right: 10px; top: 58px; }
@@ -280,4 +337,9 @@ body { background: #fff; }
   .floating-axes { left: 10px; top: 10px; width: 210px; }
   .interpretation-note { display: none; }
   .floating-actions { right: 10px; bottom: 10px; }
+  .upload-dialog form { padding: 18px; }
+  .upload-fields { grid-template-columns: 1fr 95px; }
+  .upload-footer { align-items: stretch; flex-direction: column; gap: 12px; }
+  .upload-footer .dialog-actions { justify-content: stretch; }
+  .upload-footer .button { flex: 1; }
 }

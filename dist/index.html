@@ -17,6 +17,9 @@
           <h1>art axes</h1>
         </div>
         <div class="header-actions">
+          <button id="uploadButton" class="button upload-button" type="button">
+            <span class="upload-plus" aria-hidden="true">＋</span> add art
+          </button>
           <button id="collectionButton" class="button collection-button" type="button" aria-expanded="false" aria-controls="filterPanel">
             collection <span id="collectionCount">142</span>
           </button>
@@ -31,18 +34,19 @@
           <span>search</span>
           <input id="collectionSearch" type="search" placeholder="artist, title, medium…" autocomplete="off" />
         </label>
-        <label class="filter-field">
-          <span>type</span>
-          <select id="kindFilter">
-            <option value="all">all types</option>
-            <option value="painting">painting</option>
-            <option value="paper">works on paper</option>
-            <option value="sculpture">sculpture</option>
-            <option value="object">objects</option>
-            <option value="textile">textiles</option>
-            <option value="photography">photography</option>
-          </select>
-        </label>
+        <fieldset class="filter-field include-field">
+          <legend>include</legend>
+          <div id="kindFilter" class="multi-filter">
+            <div id="customFilterOptions" class="custom-filter-options"></div>
+            <label><input type="checkbox" value="painting" /><span>paintings</span></label>
+            <label><input type="checkbox" value="paper" /><span>works on paper</span></label>
+            <label><input type="checkbox" value="sculpture" /><span>sculpture</span></label>
+            <label><input type="checkbox" value="object" /><span>objects</span></label>
+            <label><input type="checkbox" value="textile" /><span>textiles</span></label>
+            <label><input type="checkbox" value="photography" /><span>photography</span></label>
+          </div>
+          <small id="kindFilterHint">nothing selected means everything</small>
+        </fieldset>
         <label class="filter-field">
           <span>period</span>
           <select id="eraFilter">
@@ -104,6 +108,52 @@
         <div class="dialog-actions">
           <button value="cancel" class="button button-quiet" formnovalidate>Cancel</button>
           <button id="addAxisButton" value="default" class="button button-primary">Place dimension</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="uploadDialog" class="upload-dialog">
+      <form id="uploadForm">
+        <div class="dialog-heading">
+          <div>
+            <span class="dialog-kicker">your collection</span>
+            <h2>add your own art</h2>
+          </div>
+          <button id="closeUpload" class="dialog-close" type="button" aria-label="Close">×</button>
+        </div>
+
+        <div id="uploadDropzone" class="upload-dropzone">
+          <input id="artFile" name="artFile" type="file" accept=".zip,image/jpeg,image/png,image/webp,image/gif" multiple aria-hidden="true" tabindex="-1" />
+          <input id="artFolder" name="artFolder" type="file" accept="image/jpeg,image/png,image/webp,image/gif" webkitdirectory directory multiple aria-hidden="true" tabindex="-1" />
+          <span class="upload-placeholder">
+            <b>drop a folder, zip, or images</b>
+            <small>up to 500 artworks · your files stay in this browser</small>
+            <span class="upload-choices">
+              <button id="chooseFilesButton" type="button">choose files</button>
+              <button id="chooseFolderButton" type="button">choose folder</button>
+            </span>
+          </span>
+          <span class="upload-preview" hidden>
+            <img id="uploadPreviewImage" alt="Selected artwork preview" />
+            <span><b id="uploadFileName"></b><small id="uploadFileSummary">choose another</small></span>
+          </span>
+        </div>
+
+        <div class="upload-fields">
+          <label id="uploadTitleField" class="upload-field upload-title"><span>title</span><input id="uploadTitle" name="title" maxlength="120" placeholder="untitled" /></label>
+          <p id="batchTitleNote" class="batch-title-note" hidden>titles will be taken from the image filenames</p>
+          <label class="upload-field upload-collection"><span>collection name</span><input id="uploadCollection" name="collection" maxlength="80" placeholder="your art" /></label>
+          <label class="upload-field"><span>artist</span><input id="uploadArtist" name="artist" maxlength="120" placeholder="unknown artist" /></label>
+          <label class="upload-field"><span>year</span><input id="uploadYear" name="year" inputmode="numeric" maxlength="12" placeholder="2026" /></label>
+        </div>
+
+        <p id="uploadError" class="upload-error" role="alert" hidden></p>
+        <div class="upload-footer">
+          <p>kept privately in this browser</p>
+          <div class="dialog-actions">
+            <button id="cancelUpload" class="button button-quiet" type="button">cancel</button>
+            <button id="addArtworkButton" class="button button-primary" type="submit">add to collection</button>
+          </div>
         </div>
       </form>
     </dialog>
