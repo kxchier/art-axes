@@ -1,6 +1,6 @@
 # art axes
 
-art axes is an HCI research prototype for exploring art through user-drawn semantic dimensions. Its collection contains 142 varied public-domain works from the Art Institute of Chicago. Artworks shared by multiple axes combine those dimensions into a nonlinear spatial scaffold. :3
+art axes is an HCI research prototype for exploring art through user-drawn semantic dimensions. Its collection contains 142 varied public-domain works from the Art Institute of Chicago. A shared spatial board holds draggable, resizable interpretive frames, while artworks shared by multiple axes within a frame combine those dimensions into a nonlinear spatial scaffold. :3
 
 ## run locally
 
