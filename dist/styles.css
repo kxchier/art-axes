@@ -401,3 +401,15 @@ body { background: #fff; }
   .upload-footer .dialog-actions { justify-content: stretch; }
   .upload-footer .button { flex: 1; }
 }
+
+/* Arrangement modes share the board and retain independent dimensions. */
+.mode-switch { display: flex; gap: 3px; padding: 4px; border: 1px solid #ded9e5; border-radius: 12px; background: #f6f3f8; }
+.mode-switch button { border: 0; border-radius: 8px; background: transparent; color: #80768c; padding: 7px 12px; font: inherit; font-size: .8rem; cursor: pointer; }
+.mode-switch button[aria-pressed="true"] { background: #e0ddff; color: #39314b; box-shadow: 0 1px 3px #45325b16; }
+.magnet-handle { position: absolute; z-index: 5; transform: translate(-50%, -50%); border: 2px solid var(--magnet-color); border-radius: 20px; padding: 7px 12px; background: #fffdf9; color: #39314b; font: inherit; font-size: .8rem; box-shadow: 0 3px 12px #46325318; cursor: grab; touch-action: none; max-width: 210px; overflow-wrap: anywhere; }
+.magnet-handle:active { cursor: grabbing; }
+.magnet-handle:focus-visible, .mode-switch button:focus-visible { outline: 2px solid #6653aa; outline-offset: 3px; }
+@media (max-width: 760px) { .minimal-topbar { flex-wrap: wrap; gap: 12px; } .minimal-topbar .header-actions { flex-wrap: wrap; } }
+
+.frame-mode-badge { font-size: .65rem; color: #80768c; background: #efecf7; border-radius: 9px; padding: 2px 7px; margin-left: auto; }
+#frameMode { font: inherit; padding: 10px; border: 1px solid #ded9e5; border-radius: 8px; background: white; color: #39314b; }

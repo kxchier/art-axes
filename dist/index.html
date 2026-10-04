@@ -17,6 +17,10 @@
           <h1>art axes</h1>
         </div>
         <div class="header-actions">
+          <div class="mode-switch" role="group" aria-label="Mode for selected frame">
+            <button type="button" data-mode="axes" aria-pressed="true">axes</button>
+            <button type="button" data-mode="magnets" aria-pressed="false">magnets</button>
+          </div>
           <button id="uploadButton" class="button upload-button" type="button">
             <span class="upload-plus" aria-hidden="true">＋</span> add art
           </button>
@@ -119,11 +123,25 @@
       </form>
     </dialog>
 
+    <dialog id="magnetDialog" class="axis-dialog">
+      <form method="dialog" id="magnetForm">
+        <h2>what should this magnet attract?</h2>
+        <label class="frame-name-field"><span>concept</span><input id="magnetLabel" maxlength="80" placeholder="dreamlike, geometric, quiet…" autocomplete="off" required /></label>
+        <p>Related artworks gather nearby. Drag the magnet to rearrange them.</p>
+        <p id="magnetScopeHint" role="status"></p>
+        <div class="dialog-actions">
+          <button value="cancel" class="button button-quiet" formnovalidate>cancel</button>
+          <button value="default" class="button button-primary">place magnet</button>
+        </div>
+      </form>
+    </dialog>
+
     <dialog id="frameDialog" class="frame-dialog">
       <form method="dialog" id="frameForm">
         <span class="dialog-kicker">new interpretation</span>
         <h2>make a frame</h2>
         <p id="frameScopeSummary" class="frame-scope-summary">this frame will start empty. artworks appear when you draw its first axis.</p>
+        <label class="frame-name-field"><span>frame mode</span><select id="frameMode" name="mode"><option value="axes">axes</option><option value="magnets">magnets</option></select></label>
         <label class="frame-name-field"><span>frame name</span><input id="frameName" name="name" maxlength="80" autocomplete="off" required /></label>
         <div class="dialog-actions">
           <button value="cancel" class="button button-quiet" formnovalidate>cancel</button>

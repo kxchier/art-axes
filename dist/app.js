@@ -4,11 +4,11 @@ const palette = ["#91a7ff", "#ff9fc8", "#83d8bd", "#c5a3ff", "#ffbd86"];
 const CLIP_MODEL = "Xenova/clip-vit-base-patch32";
 const TRANSFORMERS_CDN = "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/+esm";
 const ZIP_FALLBACK_CDN = "https://cdn.jsdelivr.net/npm/fflate@0.8.2/+esm";
-const STORAGE_VERSION = 10;
+const STORAGE_VERSION = 12;
 const kindLabels = { all: "all works", painting: "paintings", paper: "works on paper", sculpture: "sculpture", object: "objects", textile: "textiles", photography: "photography", custom: "personal collection" };
 
 const state = {
-  frames: [], activeFrameId: null, filter: { kinds: [], era: "all", query: "" },
+  draggingMagnet: null, frames: [], activeFrameId: null, filter: { kinds: [], era: "all", query: "" },
   drawing: false, dragStart: null, dragEnd: null, drawingFrameId: null, pendingAxis: null,
   zoom: 1, panX: 0, panY: 0, panning: false, panStart: null,
   draggingFrame: null, resizingFrame: null
@@ -67,17 +67,33 @@ function ensureFrameLayout(frame, index = state.frames.indexOf(frame)) {
   return frame.layout;
 }
 
-function createFrame(name, memberIds = []) {
+function createFrame(name, memberIds = [], mode = frameMode()) {
   return {
     id: `frame-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-    name,
+    name, mode,
     memberIds: [...new Set(memberIds)],
     axes: [],
     layout: defaultFrameLayout(state.frames.length)
   };
 }
 function activeFrame() { return state.frames.find(frame => frame.id === state.activeFrameId) || state.frames[0] || null; }
-function activeAxes() { return activeFrame()?.axes || []; }
+function frameMode(frame = activeFrame()) { return frame?.mode === "magnets" ? "magnets" : "axes"; }
+function modeDimensions(frame = activeFrame()) { return (frame?.axes || []).filter(axis => (axis.type === "magnet" ? "magnets" : "axes") === frameMode(frame)); }
+function activeAxes() { return modeDimensions(); }
+function renderMode() {
+  document.querySelectorAll("[data-mode]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.mode === frameMode())));
+  drawButton.innerHTML = `<span class="plus">＋</span> ${frameMode() === "magnets" ? "place magnet" : "draw axis"}`;
+  document.querySelector(".floating-heading span").textContent = frameMode();
+  const reset = document.querySelector("#resetButton"); reset.textContent = `clear ${frameMode()}`; reset.title = `clear ${frameMode()} in this frame`;
+  document.querySelector("#drawHint").innerHTML = frameMode() === "magnets" ? "<b>click to place</b><span>then name your magnet</span>" : "<b>drag to draw</b><span>release to name the axis</span>";
+}
+function openMagnetDialog(frame, point) {
+  const layout = ensureFrameLayout(frame);
+  state.pendingAxis = { type: "magnet", frameId: frame.id, a: { x: point.x / layout.contentWidth, y: point.y / layout.contentHeight } };
+  setDrawing(false); document.querySelector("#magnetForm").reset();
+  document.querySelector("#magnetScopeHint").textContent = `${filteredWorks().length} artworks in this selection`;
+  document.querySelector("#magnetDialog").showModal(); document.querySelector("#magnetLabel").focus();
+}
 function frameForAxis(axis) { return state.frames.find(frame => frame.axes.includes(axis)); }
 function syncFrameMembers(frame) { frame.memberIds = [...new Set(frame.axes.flatMap(axis => axis.scopeIds || []))]; }
 function switchFrame(frameId) {
@@ -414,7 +430,7 @@ function filteredWorks(filter = state.filter) {
   return works.filter(work => workMatchesFilter(work, filter));
 }
 function visibleWorks(frame = activeFrame()) {
-  const includedIds = new Set(frame?.memberIds || []);
+  const includedIds = new Set(modeDimensions(frame).flatMap(axis => axis.scopeIds || []));
   return works.filter(work => includedIds.has(work.id));
 }
 function axisIncludes(axis, work) { return axis.scopeIds?.includes(work.id); }
@@ -453,12 +469,12 @@ async function scoreAxisWithClip(axis) {
   axis.runToken = runToken; axis.scoreSource = "loading"; axis.rawModelScores ||= {}; saveState(); if (activeFrame() === ownerFrame) renderSidebar();
   try {
     const classifier = await getClipClassifier();
-    const labels = [`an artwork that feels ${axis.low}`, `an artwork that feels ${axis.high}`];
+    const labels = axis.type === "magnet" ? ["an artwork", `an artwork that feels ${axis.high}`] : [`an artwork that feels ${axis.low}`, `an artwork that feels ${axis.high}`];
     const missing = works.filter(work => axisIncludes(axis, work) && !Number.isFinite(axis.rawModelScores[work.id]));
     for (let index = 0; index < missing.length; index++) {
       if (!ownerFrame.axes.includes(axis) || axis.runToken !== runToken) { if (activeFrame() === ownerFrame) setModelStatus(""); return; }
       const work = missing[index];
-      if (activeFrame() === ownerFrame) setModelStatus(`reading ${axis.low} ↔ ${axis.high} · ${index + 1}/${missing.length}`);
+      if (activeFrame() === ownerFrame) setModelStatus(`reading ${axis.type === "magnet" ? axis.high : `${axis.low} ↔ ${axis.high}`} · ${index + 1}/${missing.length}`);
       const output = await classifier(imageUrl(work), labels, { hypothesis_template: "{}" });
       const low = output.find(item => item.label === labels[0])?.score ?? 0;
       const high = output.find(item => item.label === labels[1])?.score ?? 0;
@@ -473,17 +489,29 @@ async function scoreAxisWithClip(axis) {
     console.warn("CLIP scoring unavailable", error);
     if (!ownerFrame.axes.includes(axis)) return;
     axis.scoreSource = "error"; delete axis.runToken; saveState();
-    if (activeFrame() === ownerFrame) { render(); setModelStatus("clip couldn’t score that axis", "error"); }
+    if (activeFrame() === ownerFrame) { render(); setModelStatus(`clip couldn’t score that ${axis.type === "magnet" ? "magnet" : "axis"} · try scoring again`, "error"); }
   }
 }
 
 function solvePosition(work, width, height, frame = activeFrame()) {
   const center = { x: width / 2, y: height / 2 };
-  const scoredAxes = (frame?.axes || []).filter(axis => axisIncludes(axis, work) && axisScore(work, axis) !== null);
+  const scoredAxes = modeDimensions(frame).filter(axis => axisIncludes(axis, work) && axisScore(work, axis) !== null);
   if (!scoredAxes.length) {
     const angle = hash(`angle:${work.id}`) * Math.PI * 2;
     const radius = Math.sqrt(hash(`radius:${work.id}`));
     return { x: center.x + Math.cos(angle) * radius * width * .43, y: center.y + Math.sin(angle) * radius * height * .4 };
+  }
+  if (frameMode(frame) === "magnets") {
+    // Weak matches keep their spread; strong matches gather around their concepts.
+    const angle = hash(`angle:${work.id}`) * Math.PI * 2, radius = Math.sqrt(hash(`radius:${work.id}`));
+    let x = (center.x + Math.cos(angle) * radius * width * .43) * .35;
+    let y = (center.y + Math.sin(angle) * radius * height * .4) * .35, total = .35;
+    scoredAxes.forEach(magnet => {
+      const affinity = Math.max(0, Math.min(1, (axisScore(work, magnet) + .92) / 1.84));
+      const weight = affinity ** 3 * 4;
+      x += magnet.a.x * width * weight; y += magnet.a.y * height * weight; total += weight;
+    });
+    return { x: Math.max(38, Math.min(width - 38, x / total)), y: Math.max(38, Math.min(height - 38, y / total)) };
   }
   let a00 = .06, a01 = 0, a11 = .06, b0 = 0, b1 = 0;
   scoredAxes.forEach(axis => {
@@ -511,7 +539,10 @@ function labelGroup(text, x, y, color, anchor) {
 function renderAxes(svg, width, height, frame) {
   svg.replaceChildren(); svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
   const layout = ensureFrameLayout(frame), contentWidth = layout.contentWidth, contentHeight = layout.contentHeight;
-  frame.axes.forEach(axis => {
+  modeDimensions(frame).forEach(axis => {
+    if (axis.type === "magnet") {
+      svg.append(svgEl("circle", { cx: axis.a.x * contentWidth, cy: axis.a.y * contentHeight, r: 65, fill: axis.color, opacity: .12 })); return;
+    }
     const x1 = axis.a.x * contentWidth, y1 = axis.a.y * contentHeight, x2 = axis.b.x * contentWidth, y2 = axis.b.y * contentHeight;
     svg.append(svgEl("line", { x1, y1, x2, y2, stroke: axis.color, class: "axis-line" }));
     svg.append(svgEl("circle", { cx: x1, cy: y1, r: 5, fill: axis.color, class: "axis-dot" })); svg.append(svgEl("circle", { cx: x2, cy: y2, r: 5, fill: axis.color, class: "axis-dot" }));
@@ -541,7 +572,7 @@ function renderArt(layer, frameCanvas, width, height, frame) {
     node.addEventListener("click", event => {
       event.stopPropagation();
       if (state.activeFrameId !== frame.id) {
-        state.activeFrameId = frame.id; saveState(); renderSidebar();
+        state.activeFrameId = frame.id; saveState(); renderSidebar(); renderFilters();
         boardFrames.querySelectorAll(".board-frame").forEach(element => { element.dataset.selected = String(element.dataset.frameId === frame.id); });
       }
       openDetail(work);
@@ -551,12 +582,17 @@ function renderArt(layer, frameCanvas, width, height, frame) {
 }
 
 function renderSidebar() {
+  renderMode();
   const axes = activeAxes();
   document.querySelector("#axisCount").textContent = axes.length; axisList.replaceChildren();
   axes.forEach(axis => {
     const card = document.createElement("div"); card.className = "axis-card"; card.dataset.loading = axis.scoreSource === "loading"; card.style.setProperty("--axis-color", axis.color);
-    card.innerHTML = `<div class="axis-card-top"><span class="axis-color"></span><span class="axis-name">${escapeHtml(axis.low)} → ${escapeHtml(axis.high)}</span><button class="axis-delete" type="button" aria-label="Remove ${escapeHtml(axis.low)} to ${escapeHtml(axis.high)}">×</button></div><div class="axis-scope-row"><span class="axis-scope-summary">${axis.scopeIds.length} works · this axis</span></div>`;
+    card.innerHTML = `<div class="axis-card-top"><span class="axis-color"></span><span class="axis-name">${axis.type === "magnet" ? "⊙ " : `${escapeHtml(axis.low)} → `}${escapeHtml(axis.high)}</span><button class="axis-delete" type="button" aria-label="Remove ${axis.type === "magnet" ? "magnet " : `${escapeHtml(axis.low)} to `}${escapeHtml(axis.high)}">×</button></div><div class="axis-scope-row"><span class="axis-scope-summary">${axis.scopeIds.length} works · ${axis.type === "magnet" ? "drag to move" : "this axis"}${axis.scoreSource === "error" ? " · scoring failed" : ""}</span></div>`;
     card.querySelector(".axis-delete").addEventListener("click", () => { const frame = activeFrame(); frame.axes = frame.axes.filter(item => item !== axis); syncFrameMembers(frame); saveState(); render(); });
+    if (axis.scoreSource === "error" || (axis.scoreSource === "loading" && !axis.runToken)) {
+      const retry = document.createElement("button"); retry.type = "button"; retry.className = "text-button"; retry.textContent = "retry scoring";
+      retry.addEventListener("click", () => scoreAxisWithClip(axis)); card.append(retry);
+    }
     axisList.append(card);
   });
 }
@@ -571,7 +607,7 @@ function renderFrames() {
     item.style.left = `${position.x}px`; item.style.top = `${position.y}px`; item.style.width = `${position.width}px`; item.style.height = `${position.height + 36}px`; item.setAttribute("aria-label", `${frame.name} frame`);
     const header = document.createElement("header"); header.className = "board-frame-header";
     const main = document.createElement("button"); main.type = "button"; main.className = "board-frame-title";
-    main.innerHTML = `<span class="frame-tab-name">${escapeHtml(frame.name)}</span><span class="frame-tab-count">${frame.memberIds.length}</span>`;
+    main.innerHTML = `<span class="frame-tab-name">${escapeHtml(frame.name)}</span><span class="frame-mode-badge">${frameMode(frame)}</span><span class="frame-tab-count">${visibleWorks(frame).length}</span>`;
     main.title = selected ? "drag to move · click to rename" : "drag to move · click to select";
     main.addEventListener("click", event => {
       if (frame.id !== state.activeFrameId) switchFrame(frame.id);
@@ -585,7 +621,18 @@ function renderFrames() {
     frameCanvas.style.width = `${position.width}px`; frameCanvas.style.height = `${position.height}px`;
     const svg = svgEl("svg", { class: "axis-svg", "aria-hidden": "true" }), layer = document.createElement("div"); layer.className = "art-layer";
     frameCanvas.append(svg, layer);
-    if (!frame.memberIds.length) { const empty = document.createElement("div"); empty.className = "empty-frame-hint"; empty.innerHTML = "<b>empty frame</b><span>select art, then draw an axis</span>"; frameCanvas.append(empty); }
+    modeDimensions(frame).filter(axis => axis.type === "magnet").forEach(magnet => {
+      const handle = document.createElement("button"); handle.type = "button"; handle.className = "magnet-handle"; handle.dataset.magnetId = magnet.id;
+      handle.style.left = `${magnet.a.x * position.contentWidth}px`; handle.style.top = `${magnet.a.y * position.contentHeight}px`; handle.style.setProperty("--magnet-color", magnet.color);
+      handle.textContent = `⊙ ${magnet.high}`; handle.setAttribute("aria-label", `${magnet.high} magnet; drag or use arrow keys to move`);
+      handle.addEventListener("keydown", event => {
+        const deltas = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }, delta = deltas[event.key]; if (!delta) return;
+        event.preventDefault(); const step = event.shiftKey ? 30 : 10;
+        magnet.a.x = Math.max(.04, Math.min(.96, magnet.a.x + delta[0] * step / position.contentWidth)); magnet.a.y = Math.max(.04, Math.min(.96, magnet.a.y + delta[1] * step / position.contentHeight));
+        saveState(); render(); [...boardFrames.querySelectorAll(".magnet-handle")].find(button => button.dataset.magnetId === magnet.id)?.focus();
+      }); frameCanvas.append(handle);
+    });
+    if (!visibleWorks(frame).length) { const empty = document.createElement("div"); empty.className = "empty-frame-hint"; empty.innerHTML = `<b>empty ${frameMode(frame)} frame</b><span>select art, then ${frameMode(frame) === "magnets" ? "place a magnet" : "draw an axis"}</span>`; frameCanvas.append(empty); }
     const resize = document.createElement("button"); resize.type = "button"; resize.className = "frame-resize-handle"; resize.setAttribute("aria-label", `Resize ${frame.name}`); resize.title = "drag to resize"; frameCanvas.append(resize);
     item.append(header, frameCanvas); boardFrames.append(item);
     renderAxes(svg, position.width, position.height, frame); renderArt(layer, frameCanvas, position.width, position.height, frame);
@@ -613,7 +660,7 @@ function renderFilters() {
   document.querySelector("#eraFilter").value = state.filter.era;
   if (document.activeElement !== search) search.value = state.filter.query;
   document.querySelector("#collectionCount").textContent = filtered.length;
-  document.querySelector("#filterSummary").textContent = `${filtered.length} available for the next axis`;
+  document.querySelector("#filterSummary").textContent = `${filtered.length} available for the next ${frameMode() === "magnets" ? "magnet" : "axis"}`;
 }
 function render() { renderFrames(); renderSidebar(); renderFilters(); }
 
@@ -622,7 +669,7 @@ function openDetail(work) {
   const provenance = work.custom ? escapeHtml(work.collectionName || "your art") : `Art Institute of Chicago · ${work.id}`;
   const action = work.custom ? `<button class="remove-art-button" type="button" data-remove-art>remove from collection</button>` : `<a class="source-link" href="${work.source}" target="_blank" rel="noreferrer">view museum record ↗</a>`;
   const typeMetadata = work.custom ? "" : `<div><dt>type</dt><dd>${escapeHtml(kindLabels[work.kind])}</dd></div>`;
-  document.querySelector("#detailContent").innerHTML = `<img class="detail-image" src="${imageUrl(work)}" alt="${escapeHtml(work.title)} by ${escapeHtml(work.artist)}" /><div class="detail-body"><span class="eyebrow">${provenance}</span><h2>${escapeHtml(work.title)}</h2><p class="artist">${escapeHtml(work.artist)}</p><dl class="metadata"><div><dt>date</dt><dd>${escapeHtml(work.date)}</dd></div><div><dt>origin</dt><dd>${escapeHtml(work.origin)}</dd></div><div><dt>medium</dt><dd>${escapeHtml(work.medium)}</dd></div>${typeMetadata}</dl>${scores.length ? `<span class="eyebrow">current reading</span><div class="score-list">${scores.map(({ axis, score }) => `<div class="score-row"><span>${escapeHtml(axis.low)} ↔ ${escapeHtml(axis.high)}</span><span class="score-track" style="--axis-color:${axis.color};--score:${(score + 1) * 50}%"><i></i></span></div>`).join("")}</div>` : ""}${action}</div>`;
+  document.querySelector("#detailContent").innerHTML = `<img class="detail-image" src="${imageUrl(work)}" alt="${escapeHtml(work.title)} by ${escapeHtml(work.artist)}" /><div class="detail-body"><span class="eyebrow">${provenance}</span><h2>${escapeHtml(work.title)}</h2><p class="artist">${escapeHtml(work.artist)}</p><dl class="metadata"><div><dt>date</dt><dd>${escapeHtml(work.date)}</dd></div><div><dt>origin</dt><dd>${escapeHtml(work.origin)}</dd></div><div><dt>medium</dt><dd>${escapeHtml(work.medium)}</dd></div>${typeMetadata}</dl>${scores.length ? `<span class="eyebrow">current reading</span><div class="score-list">${scores.map(({ axis, score }) => `<div class="score-row"><span>${axis.type === "magnet" ? "attraction to " : `${escapeHtml(axis.low)} ↔ `}${escapeHtml(axis.high)}</span><span class="score-track" style="--axis-color:${axis.color};--score:${(score + 1) * 50}%"><i></i></span></div>`).join("")}</div>` : ""}${action}</div>`;
   document.querySelector("[data-remove-art]")?.addEventListener("click", () => removeArtwork(work));
   detailPanel.classList.add("open"); detailPanel.setAttribute("aria-hidden", "false"); backdrop.hidden = false;
 }
@@ -683,24 +730,30 @@ function updateAxisScopeHint() {
 canvas.addEventListener("pointerdown", event => {
   const frameCanvas = event.target.closest(".board-frame-canvas"), frameElement = event.target.closest(".board-frame");
   if (frameElement && frameElement.dataset.frameId !== state.activeFrameId && !event.target.closest("button,input")) {
-    state.activeFrameId = frameElement.dataset.frameId; saveState(); renderSidebar();
+    state.activeFrameId = frameElement.dataset.frameId; saveState(); renderSidebar(); renderFilters();
     boardFrames.querySelectorAll(".board-frame").forEach(element => { element.dataset.selected = String(element.dataset.frameId === state.activeFrameId); });
+  }
+  const magnetHandle = event.target.closest(".magnet-handle");
+  if (magnetHandle && frameCanvas && event.button === 0) {
+    state.draggingMagnet = { frameId: frameCanvas.dataset.frameId, id: magnetHandle.dataset.magnetId };
+    canvas.setPointerCapture(event.pointerId); event.preventDefault(); return;
   }
   const resizeHandle = event.target.closest(".frame-resize-handle");
   if (resizeHandle && frameElement) {
     const frame = state.frames.find(item => item.id === frameElement.dataset.frameId), layout = ensureFrameLayout(frame);
-    state.activeFrameId = frame.id; state.resizingFrame = { frameId: frame.id, startX: event.clientX, startY: event.clientY, width: layout.width, height: layout.height };
+    state.activeFrameId = frame.id; renderSidebar(); renderFilters(); state.resizingFrame = { frameId: frame.id, startX: event.clientX, startY: event.clientY, width: layout.width, height: layout.height };
     canvas.setPointerCapture(event.pointerId); event.preventDefault(); return;
   }
   const frameTitle = event.target.closest(".board-frame-title");
   if (frameTitle && frameElement) {
     const frame = state.frames.find(item => item.id === frameElement.dataset.frameId), layout = ensureFrameLayout(frame);
-    state.activeFrameId = frame.id; state.draggingFrame = { frameId: frame.id, startX: event.clientX, startY: event.clientY, x: layout.x, y: layout.y, moved: false };
+    state.activeFrameId = frame.id; renderSidebar(); renderFilters(); state.draggingFrame = { frameId: frame.id, startX: event.clientX, startY: event.clientY, x: layout.x, y: layout.y, moved: false };
     canvas.setPointerCapture(event.pointerId); return;
   }
   if (frameElement && !frameCanvas) return;
   if (state.drawing) {
-    if (!frameCanvas) return;
+    if (!frameCanvas || event.button !== 0) return;
+    if (frameMode() === "magnets") { openMagnetDialog(activeFrame(), localFramePoint(event, frameCanvas)); return; }
     state.drawingFrameId = frameCanvas.dataset.frameId; state.activeFrameId = state.drawingFrameId;
     state.dragStart = localFramePoint(event, frameCanvas); state.dragEnd = state.dragStart; canvas.setPointerCapture(event.pointerId); refreshDrawingAxis(); return;
   }
@@ -709,6 +762,12 @@ canvas.addEventListener("pointerdown", event => {
   state.panning = true; state.panStart = { x: event.clientX - state.panX, y: event.clientY - state.panY }; canvas.classList.add("panning"); canvas.setPointerCapture(event.pointerId);
 });
 canvas.addEventListener("pointermove", event => {
+  if (state.draggingMagnet) {
+    const drag = state.draggingMagnet, frame = state.frames.find(item => item.id === drag.frameId);
+    const element = [...boardFrames.querySelectorAll(".board-frame-canvas")].find(item => item.dataset.frameId === frame.id);
+    const point = localFramePoint(event, element), layout = ensureFrameLayout(frame), magnet = frame.axes.find(axis => axis.id === drag.id);
+    magnet.a = { x: Math.max(.04, Math.min(.96, point.x / layout.contentWidth)), y: Math.max(.04, Math.min(.96, point.y / layout.contentHeight)) }; render(); return;
+  }
   if (state.draggingFrame) {
     const drag = state.draggingFrame, frame = state.frames.find(item => item.id === drag.frameId), layout = ensureFrameLayout(frame);
     const deltaX = event.clientX - drag.startX, deltaY = event.clientY - drag.startY;
@@ -737,6 +796,7 @@ canvas.addEventListener("pointermove", event => {
   if (!frameCanvas) return; state.dragEnd = localFramePoint(event, frameCanvas); refreshDrawingAxis();
 });
 canvas.addEventListener("pointerup", event => {
+  if (state.draggingMagnet) { state.draggingMagnet = null; saveState(); render(); return; }
   if (state.draggingFrame) {
     const moved = state.draggingFrame.moved; state.draggingFrame = null;
     if (moved) { saveState(); render(); }
@@ -753,7 +813,7 @@ canvas.addEventListener("pointerup", event => {
   state.pendingAxis = { frameId, a: { x: start.x / layout.contentWidth, y: start.y / layout.contentHeight }, b: { x: end.x / layout.contentWidth, y: end.y / layout.contentHeight } };
   setDrawing(false); document.querySelector("#axisForm").reset(); updateAxisScopeHint(); axisDialog.showModal(); setTimeout(() => document.querySelector("#startLabel").focus(), 0); render();
 });
-canvas.addEventListener("pointercancel", () => { state.panning = false; state.panStart = null; state.dragStart = null; state.dragEnd = null; state.drawingFrameId = null; state.draggingFrame = null; state.resizingFrame = null; canvas.classList.remove("panning"); render(); });
+canvas.addEventListener("pointercancel", () => { state.draggingMagnet = null; saveState(); state.panning = false; state.panStart = null; state.dragStart = null; state.dragEnd = null; state.drawingFrameId = null; state.draggingFrame = null; state.resizingFrame = null; canvas.classList.remove("panning"); render(); });
 canvas.addEventListener("wheel", event => { if (event.target.closest(".floating-axes,.floating-actions")) return; event.preventDefault(); const rect = canvas.getBoundingClientRect(); setZoom(state.zoom * Math.exp(-event.deltaY * .0015), event.clientX - rect.left, event.clientY - rect.top); }, { passive: false });
 
 document.querySelector("#axisForm").addEventListener("submit", event => {
@@ -768,17 +828,30 @@ document.querySelector("#axisForm").addEventListener("submit", event => {
   frame.axes.push(axis); state.pendingAxis = null; axisDialog.close(); saveState(); render(); scoreAxisWithClip(axis);
 });
 
+document.querySelectorAll("[data-mode]").forEach(button => button.addEventListener("click", () => {
+  setDrawing(false); activeFrame().mode = button.dataset.mode; state.pendingAxis = null; saveState(); render();
+}));
+document.querySelector("#magnetForm").addEventListener("submit", event => {
+  if (event.submitter?.value === "cancel" || !state.pendingAxis) { state.pendingAxis = null; return; }
+  event.preventDefault(); const high = document.querySelector("#magnetLabel").value.trim(); if (!high) return;
+  const scoped = filteredWorks(); if (!scoped.length) { document.querySelector("#magnetScopeHint").textContent = "no artworks match this selection"; return; }
+  const frame = state.frames.find(item => item.id === state.pendingAxis.frameId);
+  const magnet = { ...state.pendingAxis, id: `magnet-${Date.now()}`, low: "artwork", high, color: palette[modeDimensions(frame).length % palette.length], scopeIds: scoped.map(work => work.id), rawModelScores: {}, modelScores: {}, scoreSource: "loading" };
+  frame.axes.push(magnet); syncFrameMembers(frame); state.pendingAxis = null; document.querySelector("#magnetDialog").close(); saveState(); render(); scoreAxisWithClip(magnet);
+});
+[axisDialog, document.querySelector("#magnetDialog")].forEach(dialog => dialog.addEventListener("close", () => { state.pendingAxis = null; }));
 drawButton.addEventListener("click", () => setDrawing(!state.drawing));
 document.querySelector("#zoomOutButton").addEventListener("click", () => setZoom(state.zoom / 1.25)); document.querySelector("#zoomInButton").addEventListener("click", () => setZoom(state.zoom * 1.25)); zoomLevel.addEventListener("click", resetViewport);
 document.querySelector("#showAllFramesButton").addEventListener("click", showAllFrames);
 document.querySelector("#resetButton").addEventListener("click", () => {
-  const frame = activeFrame(); if (!frame?.axes.length || !window.confirm(`clear all axes from “${frame.name}”?`)) return;
-  frame.axes = []; syncFrameMembers(frame); saveState(); render();
+  const frame = activeFrame(); if (!modeDimensions(frame).length || !window.confirm(`clear all ${frameMode()} from “${frame.name}”?`)) return;
+  const removed = new Set(modeDimensions(frame)); frame.axes = frame.axes.filter(axis => !removed.has(axis)); syncFrameMembers(frame); saveState(); render();
 });
 document.querySelector("#closeDetail").addEventListener("click", closeDetail); backdrop.addEventListener("click", closeDetail);
 
 document.querySelector("#newFrameButton").addEventListener("click", () => {
-  document.querySelector("#frameScopeSummary").textContent = "this frame will start empty. artworks appear when you draw its first axis.";
+  document.querySelector("#frameScopeSummary").textContent = "choose how to arrange art in this frame. artworks appear when you add its first axis or magnet.";
+  document.querySelector("#frameMode").value = frameMode();
   const name = document.querySelector("#frameName"); name.value = `frame ${state.frames.length + 1}`;
   frameDialog.showModal(); setTimeout(() => name.select(), 0);
 });
@@ -787,7 +860,7 @@ document.querySelector("#frameForm").addEventListener("submit", event => {
   event.preventDefault();
   const name = document.querySelector("#frameName").value.trim();
   if (!name) return;
-  const frame = createFrame(name); state.frames.push(frame); state.activeFrameId = frame.id;
+  const frame = createFrame(name, [], document.querySelector("#frameMode").value); state.frames.push(frame); state.activeFrameId = frame.id;
   frameDialog.close(); filterPanel.hidden = true; collectionButton.setAttribute("aria-expanded", "false"); saveState(); render(); requestAnimationFrame(() => focusFrame(frame.id));
 });
 document.querySelector("#deleteFrameForm").addEventListener("submit", event => {
@@ -883,7 +956,7 @@ function saveState() {
 }
 function loadState() {
   try {
-    const saved = JSON.parse(localStorage.getItem("art-axes-state")); if (![7, 8, 9, STORAGE_VERSION].includes(saved?.version)) return;
+    const saved = JSON.parse(localStorage.getItem("art-axes-state")); if (![7, 8, 9, 10, 11, STORAGE_VERSION].includes(saved?.version)) return;
     if (saved.filter) {
       let migratedKinds = Array.isArray(saved.filter.kinds) ? saved.filter.kinds : saved.filter.kind && saved.filter.kind !== "all" ? [saved.filter.kind] : [];
       if (migratedKinds.includes("custom")) {
@@ -904,7 +977,7 @@ function loadState() {
           const scopeIds = (axis.scopeIds || []).filter(id => memberSet.has(id));
           return { ...axis, color: palette[index % palette.length], scopeIds, scopeMode: "selection", scopeLabel: axis.scopeLabel || "saved selection", rawModelScores: axis.rawModelScores || {}, modelScores: normalizeScores(axis.rawModelScores || {}, scopeIds) };
         });
-        const restoredFrame = { id: frame.id || `frame-restored-${frameIndex}`, name: frame.name || `frame ${frameIndex + 1}`, memberIds, axes, layout: frame.layout };
+        const restoredFrame = { id: frame.id || `frame-restored-${frameIndex}`, name: frame.name || `frame ${frameIndex + 1}`, mode: frame.mode === "magnets" || (!frame.mode && saved.mode === "magnets") ? "magnets" : "axes", memberIds, axes, layout: frame.layout };
         ensureFrameLayout(restoredFrame, frameIndex); return restoredFrame;
       });
       state.activeFrameId = state.frames.some(frame => frame.id === saved.activeFrameId) ? saved.activeFrameId : state.frames[0]?.id || null;
