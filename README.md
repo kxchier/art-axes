@@ -24,6 +24,10 @@ Run `npm test` for label aggregation and profile-comparison checks. Model assets
 
 The older artwork collection and fetch scripts remain in the repository but are not loaded by this prototype.
 
+## GitHub Pages
+
+For branch-based Pages hosting, select `main` and `/ (root)` in Settings → Pages. The root `index.html` forwards visitors to `./dist/`, where the app and its relative assets live. The root `.nojekyll` keeps the bundled runtime and model files available as static files. Commit and push both files along with `dist/`; no build command is needed. On Pages, personal label comparison uses the bundled browser worker instead of the local Node endpoint.
+
 ## Movie layout and reproducible comparison
 
 `dist/movie-layout.js` implements deterministic metric MDS (SMACOF, 16 starts, lowest squared stress). Cosine scores become chord distances `sqrt(2*(1-score))`; enabled computational source distances are averaged by their relative weights. Personal targets add squared-distance anchor penalties; computational pair penalties are divided by `n-1` to balance the number of incident pairs against one personal target. Unlabeled movies receive no anchor penalty. With only personal influence, labeled movies reach their theme targets. All weights remain relative. With every source off, the layout is a neutral circle.
