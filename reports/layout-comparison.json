@@ -1,0 +1,7127 @@
+{
+  "method": "All 45 pairs. Normalized stress after optimal uniform scaling; Recall@2 counts retained true nearest neighbors out of 20. Same target distances for both layouts: sqrt(2*(1-similarity)), weighted across enabled sources. Baseline target transform also evaluated. No personal data used.",
+  "films": [
+    "My Neighbor Totoro",
+    "Spirited Away",
+    "Howl’s Moving Castle",
+    "Kiki’s Delivery Service",
+    "Princess Mononoke",
+    "Ponyo",
+    "Castle in the Sky",
+    "Grave of the Fireflies",
+    "Whisper of the Heart",
+    "The Wind Rises"
+  ],
+  "cases": [
+    {
+      "name": "synopsis only",
+      "width": 1180,
+      "height": 793,
+      "weights": {
+        "personal": 0,
+        "metadata": 0,
+        "synopsis": 100
+      },
+      "old": {
+        "normalizedStress": 0.33853910596544673,
+        "neighborRecall": 0.55,
+        "topOneRecall": 0.4,
+        "matched": 11,
+        "total": 20,
+        "scale": 0.0021472770423819807,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              1,
+              7
+            ],
+            "actual": [
+              7,
+              5
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              3,
+              2
+            ],
+            "actual": [
+              2,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              1,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              5,
+              3
+            ],
+            "hits": 0
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              4,
+              6
+            ],
+            "hits": 0
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              5
+            ],
+            "actual": [
+              5,
+              7
+            ],
+            "hits": 1
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              8
+            ],
+            "hits": 1
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              9
+            ],
+            "actual": [
+              9,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 9,
+            "expected": [
+              8,
+              7
+            ],
+            "actual": [
+              8,
+              1
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "new": {
+        "normalizedStress": 0.2863584225731696,
+        "neighborRecall": 0.55,
+        "topOneRecall": 0.5,
+        "matched": 11,
+        "total": 20,
+        "scale": 0.002898025330276657,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              1,
+              7
+            ],
+            "actual": [
+              4,
+              7
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              3,
+              2
+            ],
+            "actual": [
+              3,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              1,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 3,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              0,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              8,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              5
+            ],
+            "actual": [
+              7,
+              9
+            ],
+            "hits": 0
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              6
+            ],
+            "hits": 1
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              9
+            ],
+            "actual": [
+              5,
+              3
+            ],
+            "hits": 1
+          },
+          {
+            "film": 9,
+            "expected": [
+              8,
+              7
+            ],
+            "actual": [
+              5,
+              6
+            ],
+            "hits": 0
+          }
+        ]
+      },
+      "posters": {
+        "normalizedStress": 0.28660284359600957,
+        "neighborRecall": 0.6,
+        "topOneRecall": 0.5,
+        "matched": 12,
+        "total": 20,
+        "scale": 0.00289116997202698,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              1,
+              7
+            ],
+            "actual": [
+              4,
+              7
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              3,
+              2
+            ],
+            "actual": [
+              3,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              1,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 3,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              0,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              8,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              5
+            ],
+            "actual": [
+              7,
+              9
+            ],
+            "hits": 0
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              6
+            ],
+            "hits": 1
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              9
+            ],
+            "actual": [
+              5,
+              9
+            ],
+            "hits": 2
+          },
+          {
+            "film": 9,
+            "expected": [
+              8,
+              7
+            ],
+            "actual": [
+              5,
+              6
+            ],
+            "hits": 0
+          }
+        ]
+      },
+      "legacyTarget": {
+        "old": {
+          "normalizedStress": 0.3311692268271979,
+          "neighborRecall": 0.55,
+          "topOneRecall": 0.4,
+          "matched": 11,
+          "total": 20,
+          "scale": 0.0009866981013700925,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                1,
+                7
+              ],
+              "actual": [
+                7,
+                5
+              ],
+              "hits": 1
+            },
+            {
+              "film": 1,
+              "expected": [
+                3,
+                2
+              ],
+              "actual": [
+                2,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                3
+              ],
+              "actual": [
+                1,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 3,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                1,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                2,
+                0
+              ],
+              "actual": [
+                5,
+                3
+              ],
+              "hits": 0
+            },
+            {
+              "film": 5,
+              "expected": [
+                1,
+                3
+              ],
+              "actual": [
+                4,
+                6
+              ],
+              "hits": 0
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                5
+              ],
+              "actual": [
+                5,
+                7
+              ],
+              "hits": 1
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                1
+              ],
+              "actual": [
+                0,
+                8
+              ],
+              "hits": 1
+            },
+            {
+              "film": 8,
+              "expected": [
+                5,
+                9
+              ],
+              "actual": [
+                9,
+                1
+              ],
+              "hits": 1
+            },
+            {
+              "film": 9,
+              "expected": [
+                8,
+                7
+              ],
+              "actual": [
+                8,
+                1
+              ],
+              "hits": 1
+            }
+          ]
+        },
+        "new": {
+          "normalizedStress": 0.27014696845182684,
+          "neighborRecall": 0.55,
+          "topOneRecall": 0.5,
+          "matched": 11,
+          "total": 20,
+          "scale": 0.0013344886240344144,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                1,
+                7
+              ],
+              "actual": [
+                4,
+                7
+              ],
+              "hits": 1
+            },
+            {
+              "film": 1,
+              "expected": [
+                3,
+                2
+              ],
+              "actual": [
+                3,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                3
+              ],
+              "actual": [
+                1,
+                4
+              ],
+              "hits": 1
+            },
+            {
+              "film": 3,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                1,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                2,
+                0
+              ],
+              "actual": [
+                0,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 5,
+              "expected": [
+                1,
+                3
+              ],
+              "actual": [
+                8,
+                1
+              ],
+              "hits": 1
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                5
+              ],
+              "actual": [
+                7,
+                9
+              ],
+              "hits": 0
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                1
+              ],
+              "actual": [
+                0,
+                6
+              ],
+              "hits": 1
+            },
+            {
+              "film": 8,
+              "expected": [
+                5,
+                9
+              ],
+              "actual": [
+                5,
+                3
+              ],
+              "hits": 1
+            },
+            {
+              "film": 9,
+              "expected": [
+                8,
+                7
+              ],
+              "actual": [
+                5,
+                6
+              ],
+              "hits": 0
+            }
+          ]
+        }
+      },
+      "positions": {
+        "old": [
+          {
+            "x": 464.3097994601054,
+            "y": 404.1232018610848
+          },
+          {
+            "x": 779.2285264843174,
+            "y": 488.45189809149616
+          },
+          {
+            "x": 839.0700740644461,
+            "y": 674.05
+          },
+          {
+            "x": 628.7444923913126,
+            "y": 638.5299442280015
+          },
+          {
+            "x": 331.2449133483361,
+            "y": 674.05
+          },
+          {
+            "x": 189.81749905231084,
+            "y": 470.30836838772007
+          },
+          {
+            "x": 158.2076812145847,
+            "y": 199.98973776645624
+          },
+          {
+            "x": 505.5491426632553,
+            "y": 166.53
+          },
+          {
+            "x": 847.2723246161847,
+            "y": 166.53
+          },
+          {
+            "x": 1085.6,
+            "y": 325.2818041684107
+          }
+        ],
+        "new": [
+          {
+            "x": 463.2401924831021,
+            "y": 519.4577831575052
+          },
+          {
+            "x": 502.5605300244415,
+            "y": 268.79744502343806
+          },
+          {
+            "x": 316.45829798554746,
+            "y": 281.40213781585624
+          },
+          {
+            "x": 509.66909493492903,
+            "y": 130
+          },
+          {
+            "x": 296.0480350111758,
+            "y": 500.49720241460307
+          },
+          {
+            "x": 703.1899646788941,
+            "y": 317.79786540988783
+          },
+          {
+            "x": 751.3723788326572,
+            "y": 648.250492483978
+          },
+          {
+            "x": 526.932093593218,
+            "y": 683
+          },
+          {
+            "x": 796.8017679273648,
+            "y": 170.78844687509928
+          },
+          {
+            "x": 883.9519649888242,
+            "y": 447.8176982277408
+          }
+        ],
+        "posters": [
+          {
+            "x": 463.2401924831021,
+            "y": 519.4577831575052
+          },
+          {
+            "x": 502.5605300244415,
+            "y": 279.44872251171904
+          },
+          {
+            "x": 316.45829798554746,
+            "y": 281.40213781585624
+          },
+          {
+            "x": 509.66909493492903,
+            "y": 119.34872251171903
+          },
+          {
+            "x": 296.0480350111758,
+            "y": 500.49720241460307
+          },
+          {
+            "x": 703.1899646788941,
+            "y": 317.79786540988783
+          },
+          {
+            "x": 751.3723788326572,
+            "y": 648.250492483978
+          },
+          {
+            "x": 526.932093593218,
+            "y": 683
+          },
+          {
+            "x": 796.8017679273648,
+            "y": 170.78844687509928
+          },
+          {
+            "x": 883.9519649888242,
+            "y": 447.8176982277408
+          }
+        ]
+      }
+    },
+    {
+      "name": "synopsis only",
+      "width": 720,
+      "height": 650,
+      "weights": {
+        "personal": 0,
+        "metadata": 0,
+        "synopsis": 100
+      },
+      "old": {
+        "normalizedStress": 0.3161858563205191,
+        "neighborRecall": 0.55,
+        "topOneRecall": 0.2,
+        "matched": 11,
+        "total": 20,
+        "scale": 0.003194375980315702,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              1,
+              7
+            ],
+            "actual": [
+              3,
+              7
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              3,
+              2
+            ],
+            "actual": [
+              2,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              3,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              2,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              3,
+              5
+            ],
+            "hits": 0
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              0,
+              4
+            ],
+            "hits": 0
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              5
+            ],
+            "actual": [
+              7,
+              5
+            ],
+            "hits": 1
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              8
+            ],
+            "hits": 1
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              9
+            ],
+            "actual": [
+              9,
+              7
+            ],
+            "hits": 1
+          },
+          {
+            "film": 9,
+            "expected": [
+              8,
+              7
+            ],
+            "actual": [
+              8,
+              1
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "new": {
+        "normalizedStress": 0.2863584225731697,
+        "neighborRecall": 0.55,
+        "topOneRecall": 0.5,
+        "matched": 11,
+        "total": 20,
+        "scale": 0.00390880001864144,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              1,
+              7
+            ],
+            "actual": [
+              4,
+              7
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              3,
+              2
+            ],
+            "actual": [
+              3,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              1,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 3,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              0,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              8,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              5
+            ],
+            "actual": [
+              7,
+              9
+            ],
+            "hits": 0
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              6
+            ],
+            "hits": 1
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              9
+            ],
+            "actual": [
+              5,
+              3
+            ],
+            "hits": 1
+          },
+          {
+            "film": 9,
+            "expected": [
+              8,
+              7
+            ],
+            "actual": [
+              5,
+              6
+            ],
+            "hits": 0
+          }
+        ]
+      },
+      "posters": {
+        "normalizedStress": 0.2913601656849686,
+        "neighborRecall": 0.55,
+        "topOneRecall": 0.4,
+        "matched": 11,
+        "total": 20,
+        "scale": 0.0037659767858982543,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              1,
+              7
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              3,
+              2
+            ],
+            "actual": [
+              2,
+              5
+            ],
+            "hits": 1
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              1,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 3,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              0,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              8,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              5
+            ],
+            "actual": [
+              7,
+              9
+            ],
+            "hits": 0
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              6
+            ],
+            "hits": 1
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              9
+            ],
+            "actual": [
+              5,
+              9
+            ],
+            "hits": 2
+          },
+          {
+            "film": 9,
+            "expected": [
+              8,
+              7
+            ],
+            "actual": [
+              5,
+              6
+            ],
+            "hits": 0
+          }
+        ]
+      },
+      "legacyTarget": {
+        "old": {
+          "normalizedStress": 0.30857641212694137,
+          "neighborRecall": 0.55,
+          "topOneRecall": 0.2,
+          "matched": 11,
+          "total": 20,
+          "scale": 0.001467638492987508,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                1,
+                7
+              ],
+              "actual": [
+                3,
+                7
+              ],
+              "hits": 1
+            },
+            {
+              "film": 1,
+              "expected": [
+                3,
+                2
+              ],
+              "actual": [
+                2,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                3
+              ],
+              "actual": [
+                3,
+                1
+              ],
+              "hits": 2
+            },
+            {
+              "film": 3,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                2,
+                1
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                2,
+                0
+              ],
+              "actual": [
+                3,
+                5
+              ],
+              "hits": 0
+            },
+            {
+              "film": 5,
+              "expected": [
+                1,
+                3
+              ],
+              "actual": [
+                0,
+                4
+              ],
+              "hits": 0
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                5
+              ],
+              "actual": [
+                7,
+                5
+              ],
+              "hits": 1
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                1
+              ],
+              "actual": [
+                0,
+                8
+              ],
+              "hits": 1
+            },
+            {
+              "film": 8,
+              "expected": [
+                5,
+                9
+              ],
+              "actual": [
+                9,
+                7
+              ],
+              "hits": 1
+            },
+            {
+              "film": 9,
+              "expected": [
+                8,
+                7
+              ],
+              "actual": [
+                8,
+                1
+              ],
+              "hits": 1
+            }
+          ]
+        },
+        "new": {
+          "normalizedStress": 0.27014696845182684,
+          "neighborRecall": 0.55,
+          "topOneRecall": 0.5,
+          "matched": 11,
+          "total": 20,
+          "scale": 0.0017999322172951979,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                1,
+                7
+              ],
+              "actual": [
+                4,
+                7
+              ],
+              "hits": 1
+            },
+            {
+              "film": 1,
+              "expected": [
+                3,
+                2
+              ],
+              "actual": [
+                3,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                3
+              ],
+              "actual": [
+                1,
+                4
+              ],
+              "hits": 1
+            },
+            {
+              "film": 3,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                1,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                2,
+                0
+              ],
+              "actual": [
+                0,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 5,
+              "expected": [
+                1,
+                3
+              ],
+              "actual": [
+                8,
+                1
+              ],
+              "hits": 1
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                5
+              ],
+              "actual": [
+                7,
+                9
+              ],
+              "hits": 0
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                1
+              ],
+              "actual": [
+                0,
+                6
+              ],
+              "hits": 1
+            },
+            {
+              "film": 8,
+              "expected": [
+                5,
+                9
+              ],
+              "actual": [
+                5,
+                3
+              ],
+              "hits": 1
+            },
+            {
+              "film": 9,
+              "expected": [
+                8,
+                7
+              ],
+              "actual": [
+                5,
+                6
+              ],
+              "hits": 0
+            }
+          ]
+        }
+      },
+      "positions": {
+        "old": [
+          {
+            "x": 285.1224500727374,
+            "y": 311.99037622456564
+          },
+          {
+            "x": 539.9442162299504,
+            "y": 420.6235469164104
+          },
+          {
+            "x": 457.7510580459823,
+            "y": 552.5
+          },
+          {
+            "x": 373.70911870979864,
+            "y": 465.4674117592944
+          },
+          {
+            "x": 209.67995637726912,
+            "y": 552.5
+          },
+          {
+            "x": 115.46673779116723,
+            "y": 377.5862437459293
+          },
+          {
+            "x": 99.73856502815012,
+            "y": 148.420593904581
+          },
+          {
+            "x": 312.03331089672935,
+            "y": 136.5
+          },
+          {
+            "x": 517.7752209925821,
+            "y": 136.5
+          },
+          {
+            "x": 662.4,
+            "y": 246.76198489369924
+          }
+        ],
+        "new": [
+          {
+            "x": 266.0189492189364,
+            "y": 418.7480851619839
+          },
+          {
+            "x": 295.1714598734558,
+            "y": 232.90588148211498
+          },
+          {
+            "x": 157.19331315384167,
+            "y": 242.25113291953176
+          },
+          {
+            "x": 300.4418244544682,
+            "y": 130
+          },
+          {
+            "x": 142.06093011678493,
+            "y": 404.6905117359625
+          },
+          {
+            "x": 443.92022697711855,
+            "y": 269.2353070850886
+          },
+          {
+            "x": 479.6431741797278,
+            "y": 514.2363506662405
+          },
+          {
+            "x": 313.2407927182991,
+            "y": 540
+          },
+          {
+            "x": 513.3249997291493,
+            "y": 160.24098231246057
+          },
+          {
+            "x": 577.9390698832151,
+            "y": 365.63337481622733
+          }
+        ],
+        "posters": [
+          {
+            "x": 266.0189492189364,
+            "y": 410.4634916610247
+          },
+          {
+            "x": 295.1714598734558,
+            "y": 250.36349166102468
+          },
+          {
+            "x": 157.19331315384167,
+            "y": 242.25113291953176
+          },
+          {
+            "x": 300.4418244544682,
+            "y": 90.35051860696245
+          },
+          {
+            "x": 142.06093011678493,
+            "y": 404.6905117359625
+          },
+          {
+            "x": 434.57261335313393,
+            "y": 269.2353070850886
+          },
+          {
+            "x": 479.6431741797278,
+            "y": 514.2363506662405
+          },
+          {
+            "x": 313.2407927182991,
+            "y": 570.4764647150869
+          },
+          {
+            "x": 522.6726133531339,
+            "y": 160.24098231246057
+          },
+          {
+            "x": 577.9390698832151,
+            "y": 365.63337481622733
+          }
+        ]
+      }
+    },
+    {
+      "name": "synopsis only",
+      "width": 1500,
+      "height": 900,
+      "weights": {
+        "personal": 0,
+        "metadata": 0,
+        "synopsis": 100
+      },
+      "old": {
+        "normalizedStress": 0.36209751413380387,
+        "neighborRecall": 0.5,
+        "topOneRecall": 0.1,
+        "matched": 10,
+        "total": 20,
+        "scale": 0.0017600326275495402,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              1,
+              7
+            ],
+            "actual": [
+              1,
+              9
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              3,
+              2
+            ],
+            "actual": [
+              0,
+              2
+            ],
+            "hits": 1
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              3,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              2,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              5,
+              2
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              4,
+              6
+            ],
+            "hits": 0
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              5
+            ],
+            "actual": [
+              5,
+              7
+            ],
+            "hits": 1
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              8,
+              5
+            ],
+            "hits": 0
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              9
+            ],
+            "actual": [
+              9,
+              7
+            ],
+            "hits": 1
+          },
+          {
+            "film": 9,
+            "expected": [
+              8,
+              7
+            ],
+            "actual": [
+              0,
+              8
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "new": {
+        "normalizedStress": 0.2863584225731696,
+        "neighborRecall": 0.55,
+        "topOneRecall": 0.5,
+        "matched": 11,
+        "total": 20,
+        "scale": 0.0024281939509742294,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              1,
+              7
+            ],
+            "actual": [
+              4,
+              7
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              3,
+              2
+            ],
+            "actual": [
+              3,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              1,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 3,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              0,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              8,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              5
+            ],
+            "actual": [
+              7,
+              9
+            ],
+            "hits": 0
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              6
+            ],
+            "hits": 1
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              9
+            ],
+            "actual": [
+              5,
+              3
+            ],
+            "hits": 1
+          },
+          {
+            "film": 9,
+            "expected": [
+              8,
+              7
+            ],
+            "actual": [
+              5,
+              6
+            ],
+            "hits": 0
+          }
+        ]
+      },
+      "posters": {
+        "normalizedStress": 0.2863584225731696,
+        "neighborRecall": 0.55,
+        "topOneRecall": 0.5,
+        "matched": 11,
+        "total": 20,
+        "scale": 0.0024281939509742294,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              1,
+              7
+            ],
+            "actual": [
+              4,
+              7
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              3,
+              2
+            ],
+            "actual": [
+              3,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              1,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 3,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              0,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              3
+            ],
+            "actual": [
+              8,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              5
+            ],
+            "actual": [
+              7,
+              9
+            ],
+            "hits": 0
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              6
+            ],
+            "hits": 1
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              9
+            ],
+            "actual": [
+              5,
+              3
+            ],
+            "hits": 1
+          },
+          {
+            "film": 9,
+            "expected": [
+              8,
+              7
+            ],
+            "actual": [
+              5,
+              6
+            ],
+            "hits": 0
+          }
+        ]
+      },
+      "legacyTarget": {
+        "old": {
+          "normalizedStress": 0.3603800230306998,
+          "neighborRecall": 0.5,
+          "topOneRecall": 0.1,
+          "matched": 10,
+          "total": 20,
+          "scale": 0.0008070857439796066,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                1,
+                7
+              ],
+              "actual": [
+                1,
+                9
+              ],
+              "hits": 1
+            },
+            {
+              "film": 1,
+              "expected": [
+                3,
+                2
+              ],
+              "actual": [
+                0,
+                2
+              ],
+              "hits": 1
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                3
+              ],
+              "actual": [
+                3,
+                1
+              ],
+              "hits": 2
+            },
+            {
+              "film": 3,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                2,
+                1
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                2,
+                0
+              ],
+              "actual": [
+                5,
+                2
+              ],
+              "hits": 1
+            },
+            {
+              "film": 5,
+              "expected": [
+                1,
+                3
+              ],
+              "actual": [
+                4,
+                6
+              ],
+              "hits": 0
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                5
+              ],
+              "actual": [
+                5,
+                7
+              ],
+              "hits": 1
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                1
+              ],
+              "actual": [
+                8,
+                5
+              ],
+              "hits": 0
+            },
+            {
+              "film": 8,
+              "expected": [
+                5,
+                9
+              ],
+              "actual": [
+                9,
+                7
+              ],
+              "hits": 1
+            },
+            {
+              "film": 9,
+              "expected": [
+                8,
+                7
+              ],
+              "actual": [
+                0,
+                8
+              ],
+              "hits": 1
+            }
+          ]
+        },
+        "new": {
+          "normalizedStress": 0.27014696845182684,
+          "neighborRecall": 0.55,
+          "topOneRecall": 0.5,
+          "matched": 11,
+          "total": 20,
+          "scale": 0.0011181397107439867,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                1,
+                7
+              ],
+              "actual": [
+                4,
+                7
+              ],
+              "hits": 1
+            },
+            {
+              "film": 1,
+              "expected": [
+                3,
+                2
+              ],
+              "actual": [
+                3,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                3
+              ],
+              "actual": [
+                1,
+                4
+              ],
+              "hits": 1
+            },
+            {
+              "film": 3,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                1,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                2,
+                0
+              ],
+              "actual": [
+                0,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 5,
+              "expected": [
+                1,
+                3
+              ],
+              "actual": [
+                8,
+                1
+              ],
+              "hits": 1
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                5
+              ],
+              "actual": [
+                7,
+                9
+              ],
+              "hits": 0
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                1
+              ],
+              "actual": [
+                0,
+                6
+              ],
+              "hits": 1
+            },
+            {
+              "film": 8,
+              "expected": [
+                5,
+                9
+              ],
+              "actual": [
+                5,
+                3
+              ],
+              "hits": 1
+            },
+            {
+              "film": 9,
+              "expected": [
+                8,
+                7
+              ],
+              "actual": [
+                5,
+                6
+              ],
+              "hits": 0
+            }
+          ]
+        }
+      },
+      "positions": {
+        "old": [
+          {
+            "x": 1182.3143754445096,
+            "y": 511.50667521423776
+          },
+          {
+            "x": 1090.809866337521,
+            "y": 661.136823885245
+          },
+          {
+            "x": 812.8917262183463,
+            "y": 765
+          },
+          {
+            "x": 790.2439524358587,
+            "y": 554.0204065165294
+          },
+          {
+            "x": 413.6880823496411,
+            "y": 753.6860802580792
+          },
+          {
+            "x": 341.91969064737657,
+            "y": 496.6512535859381
+          },
+          {
+            "x": 138.65645622148327,
+            "y": 274.18716301746167
+          },
+          {
+            "x": 550.5563512853931,
+            "y": 189
+          },
+          {
+            "x": 918.4697879094083,
+            "y": 189
+          },
+          {
+            "x": 1260.449711150463,
+            "y": 189
+          }
+        ],
+        "new": [
+          {
+            "x": 598.7134304499953,
+            "y": 594.8139907485595
+          },
+          {
+            "x": 645.641862235319,
+            "y": 295.6533701907217
+          },
+          {
+            "x": 423.53069922325733,
+            "y": 310.69694567534384
+          },
+          {
+            "x": 654.1258637559732,
+            "y": 130
+          },
+          {
+            "x": 399.171253358727,
+            "y": 572.1847262091103
+          },
+          {
+            "x": 885.0910970851177,
+            "y": 354.13488457599635
+          },
+          {
+            "x": 942.5963291673667,
+            "y": 748.5268083895578
+          },
+          {
+            "x": 674.7290809611643,
+            "y": 790
+          },
+          {
+            "x": 996.8158532225331,
+            "y": 178.68060567371703
+          },
+          {
+            "x": 1100.828746641273,
+            "y": 509.31226189929276
+          }
+        ],
+        "posters": [
+          {
+            "x": 598.7134304499953,
+            "y": 594.8139907485595
+          },
+          {
+            "x": 645.641862235319,
+            "y": 295.6533701907217
+          },
+          {
+            "x": 423.53069922325733,
+            "y": 310.69694567534384
+          },
+          {
+            "x": 654.1258637559732,
+            "y": 130
+          },
+          {
+            "x": 399.171253358727,
+            "y": 572.1847262091103
+          },
+          {
+            "x": 885.0910970851177,
+            "y": 354.13488457599635
+          },
+          {
+            "x": 942.5963291673667,
+            "y": 748.5268083895578
+          },
+          {
+            "x": 674.7290809611643,
+            "y": 790
+          },
+          {
+            "x": 996.8158532225331,
+            "y": 178.68060567371703
+          },
+          {
+            "x": 1100.828746641273,
+            "y": 509.31226189929276
+          }
+        ]
+      }
+    },
+    {
+      "name": "metadata only",
+      "width": 1180,
+      "height": 793,
+      "weights": {
+        "personal": 0,
+        "metadata": 100,
+        "synopsis": 0
+      },
+      "old": {
+        "normalizedStress": 0.19717408542667433,
+        "neighborRecall": 0.65,
+        "topOneRecall": 0.4,
+        "matched": 13,
+        "total": 20,
+        "scale": 0.0023312341706996885,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              3,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              4
+            ],
+            "actual": [
+              2,
+              9
+            ],
+            "hits": 1
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              5
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              6
+            ],
+            "actual": [
+              6,
+              0
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              2,
+              5
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              2,
+              9
+            ],
+            "actual": [
+              2,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              3,
+              0
+            ],
+            "hits": 2
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              4,
+              1
+            ],
+            "actual": [
+              1,
+              0
+            ],
+            "hits": 1
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              2,
+              1
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "new": {
+        "normalizedStress": 0.13585571094516477,
+        "neighborRecall": 1,
+        "topOneRecall": 0.9,
+        "matched": 20,
+        "total": 20,
+        "scale": 0.002231431432987445,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              3,
+              6
+            ],
+            "hits": 2
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              4
+            ],
+            "actual": [
+              2,
+              4
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              5
+            ],
+            "actual": [
+              1,
+              5
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              6
+            ],
+            "actual": [
+              0,
+              6
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 5,
+            "expected": [
+              2,
+              9
+            ],
+            "actual": [
+              2,
+              9
+            ],
+            "hits": 2
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              3,
+              0
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              4,
+              1
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              5,
+              2
+            ],
+            "hits": 2
+          }
+        ]
+      },
+      "posters": {
+        "normalizedStress": 0.15998852620030934,
+        "neighborRecall": 0.9,
+        "topOneRecall": 0.7,
+        "matched": 18,
+        "total": 20,
+        "scale": 0.0021688242984205432,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              6,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              4
+            ],
+            "actual": [
+              2,
+              4
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              5
+            ],
+            "actual": [
+              1,
+              5
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              6
+            ],
+            "actual": [
+              6,
+              0
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              3
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              2,
+              9
+            ],
+            "actual": [
+              2,
+              9
+            ],
+            "hits": 2
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              3,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 8,
+            "expected": [
+              4,
+              1
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              5,
+              2
+            ],
+            "hits": 2
+          }
+        ]
+      },
+      "legacyTarget": {
+        "old": {
+          "normalizedStress": 0.1908775586268691,
+          "neighborRecall": 0.65,
+          "topOneRecall": 0.4,
+          "matched": 13,
+          "total": 20,
+          "scale": 0.001043683313500982,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                3,
+                6
+              ],
+              "actual": [
+                3,
+                4
+              ],
+              "hits": 1
+            },
+            {
+              "film": 1,
+              "expected": [
+                2,
+                4
+              ],
+              "actual": [
+                2,
+                9
+              ],
+              "hits": 1
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                5
+              ],
+              "actual": [
+                4,
+                1
+              ],
+              "hits": 1
+            },
+            {
+              "film": 3,
+              "expected": [
+                0,
+                6
+              ],
+              "actual": [
+                6,
+                0
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                2,
+                5
+              ],
+              "hits": 1
+            },
+            {
+              "film": 5,
+              "expected": [
+                2,
+                9
+              ],
+              "actual": [
+                2,
+                4
+              ],
+              "hits": 1
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                3,
+                0
+              ],
+              "hits": 2
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 8,
+              "expected": [
+                4,
+                1
+              ],
+              "actual": [
+                1,
+                0
+              ],
+              "hits": 1
+            },
+            {
+              "film": 9,
+              "expected": [
+                5,
+                2
+              ],
+              "actual": [
+                2,
+                1
+              ],
+              "hits": 1
+            }
+          ]
+        },
+        "new": {
+          "normalizedStress": 0.15120611105860435,
+          "neighborRecall": 1,
+          "topOneRecall": 0.9,
+          "matched": 20,
+          "total": 20,
+          "scale": 0.000995492522860532,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                3,
+                6
+              ],
+              "actual": [
+                3,
+                6
+              ],
+              "hits": 2
+            },
+            {
+              "film": 1,
+              "expected": [
+                2,
+                4
+              ],
+              "actual": [
+                2,
+                4
+              ],
+              "hits": 2
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                5
+              ],
+              "actual": [
+                1,
+                5
+              ],
+              "hits": 2
+            },
+            {
+              "film": 3,
+              "expected": [
+                0,
+                6
+              ],
+              "actual": [
+                0,
+                6
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                1,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 5,
+              "expected": [
+                2,
+                9
+              ],
+              "actual": [
+                2,
+                9
+              ],
+              "hits": 2
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                3,
+                0
+              ],
+              "hits": 2
+            },
+            {
+              "film": 8,
+              "expected": [
+                4,
+                1
+              ],
+              "actual": [
+                4,
+                1
+              ],
+              "hits": 2
+            },
+            {
+              "film": 9,
+              "expected": [
+                5,
+                2
+              ],
+              "actual": [
+                5,
+                2
+              ],
+              "hits": 2
+            }
+          ]
+        }
+      },
+      "positions": {
+        "old": [
+          {
+            "x": 519.1840370577893,
+            "y": 384.0616698863973
+          },
+          {
+            "x": 753.966811594,
+            "y": 508.81137083725326
+          },
+          {
+            "x": 669.4683951251661,
+            "y": 594.2447743002649
+          },
+          {
+            "x": 431.24999026939827,
+            "y": 450.7486514750825
+          },
+          {
+            "x": 577.9902041718454,
+            "y": 524.7025348805844
+          },
+          {
+            "x": 579.4065572403222,
+            "y": 674.05
+          },
+          {
+            "x": 339.4531098757007,
+            "y": 490.66345279811605
+          },
+          {
+            "x": 335.39272527831884,
+            "y": 166.53
+          },
+          {
+            "x": 901.6006575806989,
+            "y": 216.91315410454297
+          },
+          {
+            "x": 792.2875118067591,
+            "y": 672.058718250566
+          }
+        ],
+        "new": [
+          {
+            "x": 574.9211856689265,
+            "y": 182.7371041752911
+          },
+          {
+            "x": 455.2580780635625,
+            "y": 448.78019926349253
+          },
+          {
+            "x": 384.60969153944103,
+            "y": 477.55155742134434
+          },
+          {
+            "x": 585.7917562701566,
+            "y": 220.7970699548019
+          },
+          {
+            "x": 527.0052040611978,
+            "y": 383.83498740521566
+          },
+          {
+            "x": 296.2596836860079,
+            "y": 430.5814329921946
+          },
+          {
+            "x": 537.9190435584879,
+            "y": 130
+          },
+          {
+            "x": 953.9422603442633,
+            "y": 284.30026324516314
+          },
+          {
+            "x": 783.0654638097628,
+            "y": 683
+          },
+          {
+            "x": 226.05773965573673,
+            "y": 333.23234780599734
+          }
+        ],
+        "posters": [
+          {
+            "x": 478.1690684553029,
+            "y": 182.7371041752911
+          },
+          {
+            "x": 465.9076234145869,
+            "y": 448.78019926349253
+          },
+          {
+            "x": 377.80762341458694,
+            "y": 477.55155742134434
+          },
+          {
+            "x": 654.281458521134,
+            "y": 220.7970699548019
+          },
+          {
+            "x": 553.9395217582254,
+            "y": 383.83498740521566
+          },
+          {
+            "x": 289.7757250709484,
+            "y": 430.5814329921946
+          },
+          {
+            "x": 566.181458521134,
+            "y": 130
+          },
+          {
+            "x": 953.9422603442633,
+            "y": 284.30026324516314
+          },
+          {
+            "x": 783.0654638097628,
+            "y": 683
+          },
+          {
+            "x": 201.75990334759828,
+            "y": 333.23234780599734
+          }
+        ]
+      }
+    },
+    {
+      "name": "metadata only",
+      "width": 720,
+      "height": 650,
+      "weights": {
+        "personal": 0,
+        "metadata": 100,
+        "synopsis": 0
+      },
+      "old": {
+        "normalizedStress": 0.22305733847622544,
+        "neighborRecall": 0.6,
+        "topOneRecall": 0.3,
+        "matched": 12,
+        "total": 20,
+        "scale": 0.00316665659500386,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              6,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              4
+            ],
+            "actual": [
+              2,
+              9
+            ],
+            "hits": 1
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              5
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              6
+            ],
+            "actual": [
+              0,
+              6
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              2,
+              5
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              2,
+              9
+            ],
+            "actual": [
+              4,
+              2
+            ],
+            "hits": 1
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              6,
+              3
+            ],
+            "hits": 1
+          },
+          {
+            "film": 8,
+            "expected": [
+              4,
+              1
+            ],
+            "actual": [
+              0,
+              6
+            ],
+            "hits": 0
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "new": {
+        "normalizedStress": 0.13585571094516477,
+        "neighborRecall": 1,
+        "topOneRecall": 0.9,
+        "matched": 20,
+        "total": 20,
+        "scale": 0.003009711176687945,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              3,
+              6
+            ],
+            "hits": 2
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              4
+            ],
+            "actual": [
+              2,
+              4
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              5
+            ],
+            "actual": [
+              1,
+              5
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              6
+            ],
+            "actual": [
+              0,
+              6
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 5,
+            "expected": [
+              2,
+              9
+            ],
+            "actual": [
+              2,
+              9
+            ],
+            "hits": 2
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              3,
+              0
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              4,
+              1
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              5,
+              2
+            ],
+            "hits": 2
+          }
+        ]
+      },
+      "posters": {
+        "normalizedStress": 0.2192219247950777,
+        "neighborRecall": 0.8,
+        "topOneRecall": 0.7,
+        "matched": 16,
+        "total": 20,
+        "scale": 0.002688749267193956,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              6,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              4
+            ],
+            "actual": [
+              2,
+              4
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              5
+            ],
+            "actual": [
+              1,
+              5
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              6
+            ],
+            "actual": [
+              6,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 4,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              3
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              2,
+              9
+            ],
+            "actual": [
+              2,
+              9
+            ],
+            "hits": 2
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              3,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 8,
+            "expected": [
+              4,
+              1
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              5,
+              2
+            ],
+            "hits": 2
+          }
+        ]
+      },
+      "legacyTarget": {
+        "old": {
+          "normalizedStress": 0.20956778417055644,
+          "neighborRecall": 0.6,
+          "topOneRecall": 0.3,
+          "matched": 12,
+          "total": 20,
+          "scale": 0.0014202408616471164,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                3,
+                6
+              ],
+              "actual": [
+                6,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 1,
+              "expected": [
+                2,
+                4
+              ],
+              "actual": [
+                2,
+                9
+              ],
+              "hits": 1
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                5
+              ],
+              "actual": [
+                4,
+                1
+              ],
+              "hits": 1
+            },
+            {
+              "film": 3,
+              "expected": [
+                0,
+                6
+              ],
+              "actual": [
+                0,
+                6
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                2,
+                5
+              ],
+              "hits": 1
+            },
+            {
+              "film": 5,
+              "expected": [
+                2,
+                9
+              ],
+              "actual": [
+                4,
+                2
+              ],
+              "hits": 1
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                6,
+                3
+              ],
+              "hits": 1
+            },
+            {
+              "film": 8,
+              "expected": [
+                4,
+                1
+              ],
+              "actual": [
+                0,
+                6
+              ],
+              "hits": 0
+            },
+            {
+              "film": 9,
+              "expected": [
+                5,
+                2
+              ],
+              "actual": [
+                1,
+                2
+              ],
+              "hits": 1
+            }
+          ]
+        },
+        "new": {
+          "normalizedStress": 0.15120611105860438,
+          "neighborRecall": 1,
+          "topOneRecall": 0.9,
+          "matched": 20,
+          "total": 20,
+          "scale": 0.001342700890589937,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                3,
+                6
+              ],
+              "actual": [
+                3,
+                6
+              ],
+              "hits": 2
+            },
+            {
+              "film": 1,
+              "expected": [
+                2,
+                4
+              ],
+              "actual": [
+                2,
+                4
+              ],
+              "hits": 2
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                5
+              ],
+              "actual": [
+                1,
+                5
+              ],
+              "hits": 2
+            },
+            {
+              "film": 3,
+              "expected": [
+                0,
+                6
+              ],
+              "actual": [
+                0,
+                6
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                1,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 5,
+              "expected": [
+                2,
+                9
+              ],
+              "actual": [
+                2,
+                9
+              ],
+              "hits": 2
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                3,
+                0
+              ],
+              "hits": 2
+            },
+            {
+              "film": 8,
+              "expected": [
+                4,
+                1
+              ],
+              "actual": [
+                4,
+                1
+              ],
+              "hits": 2
+            },
+            {
+              "film": 9,
+              "expected": [
+                5,
+                2
+              ],
+              "actual": [
+                5,
+                2
+              ],
+              "hits": 2
+            }
+          ]
+        }
+      },
+      "positions": {
+        "old": [
+          {
+            "x": 377.78524704641467,
+            "y": 311.542886874645
+          },
+          {
+            "x": 437.7369286721205,
+            "y": 453.47182893215154
+          },
+          {
+            "x": 377.02405648943625,
+            "y": 495.1715715256895
+          },
+          {
+            "x": 283.3787160247401,
+            "y": 366.8511791133078
+          },
+          {
+            "x": 312.2431868649021,
+            "y": 488.21499126048036
+          },
+          {
+            "x": 241.41122717511033,
+            "y": 518.8271978898398
+          },
+          {
+            "x": 297.35408651752346,
+            "y": 258.03767383015685
+          },
+          {
+            "x": 182.25450361642652,
+            "y": 136.5
+          },
+          {
+            "x": 579.1978102088322,
+            "y": 193.8145925388245
+          },
+          {
+            "x": 511.61423738449344,
+            "y": 524.4836702030186
+          }
+        ],
+        "new": [
+          {
+            "x": 348.820408904629,
+            "y": 169.09984215527913
+          },
+          {
+            "x": 260.1009258699107,
+            "y": 366.3469831790813
+          },
+          {
+            "x": 207.72147112327457,
+            "y": 387.6783698783927
+          },
+          {
+            "x": 356.87996396159895,
+            "y": 197.31789996648968
+          },
+          {
+            "x": 313.2949975860598,
+            "y": 318.1959219460008
+          },
+          {
+            "x": 142.21784866412884,
+            "y": 352.8542269924047
+          },
+          {
+            "x": 321.3866326563834,
+            "y": 130
+          },
+          {
+            "x": 629.8306089351681,
+            "y": 244.3998335090721
+          },
+          {
+            "x": 503.14075978662345,
+            "y": 540
+          },
+          {
+            "x": 90.16939106483193,
+            "y": 280.67859421421144
+          }
+        ],
+        "posters": [
+          {
+            "x": 260.37585109027697,
+            "y": 163.59788205063995
+          },
+          {
+            "x": 282.6733229416867,
+            "y": 366.3469831790813
+          },
+          {
+            "x": 194.57332294168668,
+            "y": 387.6783698783927
+          },
+          {
+            "x": 458.71454243469907,
+            "y": 197.31789996648968
+          },
+          {
+            "x": 370.69393268815713,
+            "y": 323.69788205064
+          },
+          {
+            "x": 106.55271319521627,
+            "y": 352.8542269924047
+          },
+          {
+            "x": 348.47585109027693,
+            "y": 130
+          },
+          {
+            "x": 629.8306089351681,
+            "y": 244.3998335090721
+          },
+          {
+            "x": 503.14075978662345,
+            "y": 540
+          },
+          {
+            "x": 18.532103448817388,
+            "y": 280.67859421421144
+          }
+        ]
+      }
+    },
+    {
+      "name": "metadata only",
+      "width": 1500,
+      "height": 900,
+      "weights": {
+        "personal": 0,
+        "metadata": 100,
+        "synopsis": 0
+      },
+      "old": {
+        "normalizedStress": 0.21161359649427053,
+        "neighborRecall": 0.7,
+        "topOneRecall": 0.6,
+        "matched": 14,
+        "total": 20,
+        "scale": 0.0019136566636154342,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              3,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              4
+            ],
+            "actual": [
+              2,
+              9
+            ],
+            "hits": 1
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              5
+            ],
+            "actual": [
+              1,
+              5
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              6
+            ],
+            "actual": [
+              0,
+              6
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              2,
+              0
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              2,
+              9
+            ],
+            "actual": [
+              2,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              3,
+              0
+            ],
+            "hits": 2
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              4,
+              1
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 1
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              2,
+              1
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "new": {
+        "normalizedStress": 0.1358557109451648,
+        "neighborRecall": 1,
+        "topOneRecall": 0.9,
+        "matched": 20,
+        "total": 20,
+        "scale": 0.0018696690643061477,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              3,
+              6
+            ],
+            "hits": 2
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              4
+            ],
+            "actual": [
+              2,
+              4
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              5
+            ],
+            "actual": [
+              1,
+              5
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              6
+            ],
+            "actual": [
+              0,
+              6
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 5,
+            "expected": [
+              2,
+              9
+            ],
+            "actual": [
+              2,
+              9
+            ],
+            "hits": 2
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              3,
+              0
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              4,
+              1
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              5,
+              2
+            ],
+            "hits": 2
+          }
+        ]
+      },
+      "posters": {
+        "normalizedStress": 0.1451088080444594,
+        "neighborRecall": 1,
+        "topOneRecall": 0.9,
+        "matched": 20,
+        "total": 20,
+        "scale": 0.0018524159151131747,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              3,
+              6
+            ],
+            "hits": 2
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              4
+            ],
+            "actual": [
+              2,
+              4
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              5
+            ],
+            "actual": [
+              1,
+              5
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              6
+            ],
+            "actual": [
+              0,
+              6
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 5,
+            "expected": [
+              2,
+              9
+            ],
+            "actual": [
+              2,
+              9
+            ],
+            "hits": 2
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              3,
+              0
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              4,
+              1
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              5,
+              2
+            ],
+            "hits": 2
+          }
+        ]
+      },
+      "legacyTarget": {
+        "old": {
+          "normalizedStress": 0.21347118207523819,
+          "neighborRecall": 0.7,
+          "topOneRecall": 0.6,
+          "matched": 14,
+          "total": 20,
+          "scale": 0.0008552950311245133,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                3,
+                6
+              ],
+              "actual": [
+                3,
+                4
+              ],
+              "hits": 1
+            },
+            {
+              "film": 1,
+              "expected": [
+                2,
+                4
+              ],
+              "actual": [
+                2,
+                9
+              ],
+              "hits": 1
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                5
+              ],
+              "actual": [
+                1,
+                5
+              ],
+              "hits": 2
+            },
+            {
+              "film": 3,
+              "expected": [
+                0,
+                6
+              ],
+              "actual": [
+                0,
+                6
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                2,
+                0
+              ],
+              "hits": 1
+            },
+            {
+              "film": 5,
+              "expected": [
+                2,
+                9
+              ],
+              "actual": [
+                2,
+                4
+              ],
+              "hits": 1
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                3,
+                0
+              ],
+              "hits": 2
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 8,
+              "expected": [
+                4,
+                1
+              ],
+              "actual": [
+                1,
+                2
+              ],
+              "hits": 1
+            },
+            {
+              "film": 9,
+              "expected": [
+                5,
+                2
+              ],
+              "actual": [
+                2,
+                1
+              ],
+              "hits": 1
+            }
+          ]
+        },
+        "new": {
+          "normalizedStress": 0.15120611105860435,
+          "neighborRecall": 1,
+          "topOneRecall": 0.9,
+          "matched": 20,
+          "total": 20,
+          "scale": 0.0008341020683967791,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                3,
+                6
+              ],
+              "actual": [
+                3,
+                6
+              ],
+              "hits": 2
+            },
+            {
+              "film": 1,
+              "expected": [
+                2,
+                4
+              ],
+              "actual": [
+                2,
+                4
+              ],
+              "hits": 2
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                5
+              ],
+              "actual": [
+                1,
+                5
+              ],
+              "hits": 2
+            },
+            {
+              "film": 3,
+              "expected": [
+                0,
+                6
+              ],
+              "actual": [
+                0,
+                6
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                1,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 5,
+              "expected": [
+                2,
+                9
+              ],
+              "actual": [
+                2,
+                9
+              ],
+              "hits": 2
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                3,
+                0
+              ],
+              "hits": 2
+            },
+            {
+              "film": 8,
+              "expected": [
+                4,
+                1
+              ],
+              "actual": [
+                4,
+                1
+              ],
+              "hits": 2
+            },
+            {
+              "film": 9,
+              "expected": [
+                5,
+                2
+              ],
+              "actual": [
+                5,
+                2
+              ],
+              "hits": 2
+            }
+          ]
+        }
+      },
+      "positions": {
+        "old": [
+          {
+            "x": 625.7015269945001,
+            "y": 464.2339086479594
+          },
+          {
+            "x": 953.9035500436007,
+            "y": 572.4710433271415
+          },
+          {
+            "x": 868.6007116523529,
+            "y": 669.4213829764702
+          },
+          {
+            "x": 535.9946578279087,
+            "y": 523.8566814512129
+          },
+          {
+            "x": 730.9774580526887,
+            "y": 593.3472709156428
+          },
+          {
+            "x": 772.1299753532195,
+            "y": 765
+          },
+          {
+            "x": 424.76877119489455,
+            "y": 572.3935984215681
+          },
+          {
+            "x": 434.5574450370911,
+            "y": 189
+          },
+          {
+            "x": 1126.4624194234618,
+            "y": 241.7424901190552
+          },
+          {
+            "x": 1026.903484420282,
+            "y": 757.6824521595527
+          }
+        ],
+        "new": [
+          {
+            "x": 732.0035850659881,
+            "y": 192.94120932313223
+          },
+          {
+            "x": 589.1868562783928,
+            "y": 510.4609973126674
+          },
+          {
+            "x": 504.86870961307613,
+            "y": 544.7993271213151
+          },
+          {
+            "x": 744.9775029625739,
+            "y": 238.36539994605656
+          },
+          {
+            "x": 674.8163375775597,
+            "y": 432.9495328886842
+          },
+          {
+            "x": 399.4238539471342,
+            "y": 488.7409507682612
+          },
+          {
+            "x": 687.8418964712514,
+            "y": 130
+          },
+          {
+            "x": 1184.3614680419778,
+            "y": 314.15582955118924
+          },
+          {
+            "x": 980.421710876028,
+            "y": 790
+          },
+          {
+            "x": 315.63853195802216,
+            "y": 372.5557858082428
+          }
+        ],
+        "posters": [
+          {
+            "x": 721.5811311117682,
+            "y": 192.94120932313223
+          },
+          {
+            "x": 589.6466836843022,
+            "y": 510.4609973126674
+          },
+          {
+            "x": 501.54668368430214,
+            "y": 544.7993271213151
+          },
+          {
+            "x": 809.6811311117682,
+            "y": 238.36539994605656
+          },
+          {
+            "x": 677.6785361004244,
+            "y": 432.9495328886842
+          },
+          {
+            "x": 401.5811929525782,
+            "y": 488.7409507682612
+          },
+          {
+            "x": 633.560722276277,
+            "y": 130
+          },
+          {
+            "x": 1184.3614680419778,
+            "y": 314.15582955118924
+          },
+          {
+            "x": 980.421710876028,
+            "y": 790
+          },
+          {
+            "x": 313.48119295257817,
+            "y": 372.5557858082428
+          }
+        ]
+      }
+    },
+    {
+      "name": "computational blend",
+      "width": 1180,
+      "height": 793,
+      "weights": {
+        "personal": 0,
+        "metadata": 15,
+        "synopsis": 25
+      },
+      "old": {
+        "normalizedStress": 0.3109890191909203,
+        "neighborRecall": 0.65,
+        "topOneRecall": 0.4,
+        "matched": 13,
+        "total": 20,
+        "scale": 0.002160990818098167,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              7,
+              6
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              3
+            ],
+            "actual": [
+              3,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              4
+            ],
+            "actual": [
+              1,
+              4
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              1,
+              0
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              2,
+              5
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              4,
+              0
+            ],
+            "hits": 0
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              5
+            ],
+            "hits": 1
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              1
+            ],
+            "actual": [
+              3,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              2,
+              1
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "new": {
+        "normalizedStress": 0.2588492021347087,
+        "neighborRecall": 0.7,
+        "topOneRecall": 0.6,
+        "matched": 14,
+        "total": 20,
+        "scale": 0.0027908977525500024,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              6,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              3
+            ],
+            "actual": [
+              5,
+              3
+            ],
+            "hits": 1
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              4
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              2,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              1
+            ],
+            "actual": [
+              9,
+              3
+            ],
+            "hits": 0
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              5,
+              1
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "posters": {
+        "normalizedStress": 0.2592083855810357,
+        "neighborRecall": 0.7,
+        "topOneRecall": 0.7,
+        "matched": 14,
+        "total": 20,
+        "scale": 0.002781001099661744,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              3,
+              6
+            ],
+            "hits": 2
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              3
+            ],
+            "actual": [
+              3,
+              5
+            ],
+            "hits": 1
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              4
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              2,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              1
+            ],
+            "actual": [
+              9,
+              3
+            ],
+            "hits": 0
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              5,
+              1
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "legacyTarget": {
+        "old": {
+          "normalizedStress": 0.3039135452048798,
+          "neighborRecall": 0.6,
+          "topOneRecall": 0.6,
+          "matched": 12,
+          "total": 20,
+          "scale": 0.0009863573974847157,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                3,
+                4
+              ],
+              "actual": [
+                7,
+                6
+              ],
+              "hits": 0
+            },
+            {
+              "film": 1,
+              "expected": [
+                3,
+                2
+              ],
+              "actual": [
+                3,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                4
+              ],
+              "actual": [
+                1,
+                4
+              ],
+              "hits": 2
+            },
+            {
+              "film": 3,
+              "expected": [
+                1,
+                0
+              ],
+              "actual": [
+                1,
+                0
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                2,
+                0
+              ],
+              "actual": [
+                2,
+                5
+              ],
+              "hits": 1
+            },
+            {
+              "film": 5,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                4,
+                0
+              ],
+              "hits": 0
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                5
+              ],
+              "hits": 1
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 8,
+              "expected": [
+                5,
+                1
+              ],
+              "actual": [
+                3,
+                1
+              ],
+              "hits": 1
+            },
+            {
+              "film": 9,
+              "expected": [
+                5,
+                1
+              ],
+              "actual": [
+                2,
+                1
+              ],
+              "hits": 1
+            }
+          ]
+        },
+        "new": {
+          "normalizedStress": 0.2592144704398746,
+          "neighborRecall": 0.7,
+          "topOneRecall": 0.5,
+          "matched": 14,
+          "total": 20,
+          "scale": 0.0012706849101819368,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                3,
+                4
+              ],
+              "actual": [
+                6,
+                3
+              ],
+              "hits": 1
+            },
+            {
+              "film": 1,
+              "expected": [
+                3,
+                2
+              ],
+              "actual": [
+                5,
+                3
+              ],
+              "hits": 1
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                4
+              ],
+              "actual": [
+                4,
+                1
+              ],
+              "hits": 2
+            },
+            {
+              "film": 3,
+              "expected": [
+                1,
+                0
+              ],
+              "actual": [
+                0,
+                1
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                2,
+                0
+              ],
+              "actual": [
+                2,
+                1
+              ],
+              "hits": 1
+            },
+            {
+              "film": 5,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                1,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                4
+              ],
+              "hits": 1
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 8,
+              "expected": [
+                5,
+                1
+              ],
+              "actual": [
+                9,
+                3
+              ],
+              "hits": 0
+            },
+            {
+              "film": 9,
+              "expected": [
+                5,
+                1
+              ],
+              "actual": [
+                5,
+                1
+              ],
+              "hits": 2
+            }
+          ]
+        }
+      },
+      "positions": {
+        "old": [
+          {
+            "x": 382.2851158100023,
+            "y": 398.26416632130844
+          },
+          {
+            "x": 714.3412085435675,
+            "y": 500.0707085160933
+          },
+          {
+            "x": 763.4255972429587,
+            "y": 669.1199918499485
+          },
+          {
+            "x": 622.1387922150925,
+            "y": 376.31578090665874
+          },
+          {
+            "x": 574.4821084694399,
+            "y": 674.05
+          },
+          {
+            "x": 376.8589292737657,
+            "y": 659.0477827429432
+          },
+          {
+            "x": 158.25062212656002,
+            "y": 470.52964077429255
+          },
+          {
+            "x": 371.22243175804846,
+            "y": 166.53
+          },
+          {
+            "x": 899.8493058182268,
+            "y": 204.5100800969741
+          },
+          {
+            "x": 1037.1458887423394,
+            "y": 526.6262967351598
+          }
+        ],
+        "new": [
+          {
+            "x": 737.8213752041778,
+            "y": 301.5980478721051
+          },
+          {
+            "x": 480.01968920936224,
+            "y": 337.57531345455914
+          },
+          {
+            "x": 401.5123158324361,
+            "y": 187.24852424045164
+          },
+          {
+            "x": 632.0989486317457,
+            "y": 404.69289824249245
+          },
+          {
+            "x": 551.2201064170021,
+            "y": 130
+          },
+          {
+            "x": 320.36810318265583,
+            "y": 354.7841932873176
+          },
+          {
+            "x": 772.2070818959573,
+            "y": 163.87947782785875
+          },
+          {
+            "x": 859.6318968173441,
+            "y": 517.0970601184905
+          },
+          {
+            "x": 587.0441673603215,
+            "y": 683
+          },
+          {
+            "x": 345.02367898254374,
+            "y": 542.6771534832884
+          }
+        ],
+        "posters": [
+          {
+            "x": 737.8213752041778,
+            "y": 312.78876284998194
+          },
+          {
+            "x": 484.8160025208992,
+            "y": 337.57531345455914
+          },
+          {
+            "x": 396.71600252089917,
+            "y": 187.24852424045164
+          },
+          {
+            "x": 632.0989486317457,
+            "y": 404.69289824249245
+          },
+          {
+            "x": 551.2201064170021,
+            "y": 130
+          },
+          {
+            "x": 320.36810318265583,
+            "y": 354.7841932873176
+          },
+          {
+            "x": 772.2070818959573,
+            "y": 152.6887628499819
+          },
+          {
+            "x": 859.6318968173441,
+            "y": 517.0970601184905
+          },
+          {
+            "x": 587.0441673603215,
+            "y": 683
+          },
+          {
+            "x": 345.02367898254374,
+            "y": 542.6771534832884
+          }
+        ]
+      }
+    },
+    {
+      "name": "computational blend",
+      "width": 720,
+      "height": 650,
+      "weights": {
+        "personal": 0,
+        "metadata": 15,
+        "synopsis": 25
+      },
+      "old": {
+        "normalizedStress": 0.285111544562157,
+        "neighborRecall": 0.55,
+        "topOneRecall": 0.5,
+        "matched": 11,
+        "total": 20,
+        "scale": 0.0032154800522803725,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              3,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              3
+            ],
+            "actual": [
+              2,
+              0
+            ],
+            "hits": 1
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              4
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              6
+            ],
+            "hits": 1
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              2,
+              5
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              4,
+              3
+            ],
+            "hits": 0
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              3,
+              5
+            ],
+            "hits": 1
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              1
+            ],
+            "actual": [
+              1,
+              0
+            ],
+            "hits": 1
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              2,
+              1
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "new": {
+        "normalizedStress": 0.2588492021347087,
+        "neighborRecall": 0.7,
+        "topOneRecall": 0.6,
+        "matched": 14,
+        "total": 20,
+        "scale": 0.00376430843209793,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              6,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              3
+            ],
+            "actual": [
+              5,
+              3
+            ],
+            "hits": 1
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              4
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              2,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              1
+            ],
+            "actual": [
+              9,
+              3
+            ],
+            "hits": 0
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              5,
+              1
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "posters": {
+        "normalizedStress": 0.2663507198140588,
+        "neighborRecall": 0.55,
+        "topOneRecall": 0.7,
+        "matched": 11,
+        "total": 20,
+        "scale": 0.0036029799598450265,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              3,
+              7
+            ],
+            "hits": 1
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              3
+            ],
+            "actual": [
+              3,
+              5
+            ],
+            "hits": 1
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              4
+            ],
+            "actual": [
+              4,
+              5
+            ],
+            "hits": 1
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              2,
+              6
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              9
+            ],
+            "hits": 1
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              1
+            ],
+            "actual": [
+              9,
+              3
+            ],
+            "hits": 0
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              5,
+              8
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "legacyTarget": {
+        "old": {
+          "normalizedStress": 0.28075914652323813,
+          "neighborRecall": 0.55,
+          "topOneRecall": 0.3,
+          "matched": 11,
+          "total": 20,
+          "scale": 0.001466105305921492,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                3,
+                4
+              ],
+              "actual": [
+                3,
+                1
+              ],
+              "hits": 1
+            },
+            {
+              "film": 1,
+              "expected": [
+                3,
+                2
+              ],
+              "actual": [
+                2,
+                0
+              ],
+              "hits": 1
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                4
+              ],
+              "actual": [
+                4,
+                1
+              ],
+              "hits": 2
+            },
+            {
+              "film": 3,
+              "expected": [
+                1,
+                0
+              ],
+              "actual": [
+                0,
+                6
+              ],
+              "hits": 1
+            },
+            {
+              "film": 4,
+              "expected": [
+                2,
+                0
+              ],
+              "actual": [
+                2,
+                5
+              ],
+              "hits": 1
+            },
+            {
+              "film": 5,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                4,
+                3
+              ],
+              "hits": 0
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                3,
+                5
+              ],
+              "hits": 1
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 8,
+              "expected": [
+                5,
+                1
+              ],
+              "actual": [
+                1,
+                0
+              ],
+              "hits": 1
+            },
+            {
+              "film": 9,
+              "expected": [
+                5,
+                1
+              ],
+              "actual": [
+                2,
+                1
+              ],
+              "hits": 1
+            }
+          ]
+        },
+        "new": {
+          "normalizedStress": 0.2592144704398746,
+          "neighborRecall": 0.7,
+          "topOneRecall": 0.5,
+          "matched": 14,
+          "total": 20,
+          "scale": 0.00171387501300149,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                3,
+                4
+              ],
+              "actual": [
+                6,
+                3
+              ],
+              "hits": 1
+            },
+            {
+              "film": 1,
+              "expected": [
+                3,
+                2
+              ],
+              "actual": [
+                5,
+                3
+              ],
+              "hits": 1
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                4
+              ],
+              "actual": [
+                4,
+                1
+              ],
+              "hits": 2
+            },
+            {
+              "film": 3,
+              "expected": [
+                1,
+                0
+              ],
+              "actual": [
+                0,
+                1
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                2,
+                0
+              ],
+              "actual": [
+                2,
+                1
+              ],
+              "hits": 1
+            },
+            {
+              "film": 5,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                1,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                4
+              ],
+              "hits": 1
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 8,
+              "expected": [
+                5,
+                1
+              ],
+              "actual": [
+                9,
+                3
+              ],
+              "hits": 0
+            },
+            {
+              "film": 9,
+              "expected": [
+                5,
+                1
+              ],
+              "actual": [
+                5,
+                1
+              ],
+              "hits": 2
+            }
+          ]
+        }
+      },
+      "positions": {
+        "old": [
+          {
+            "x": 349.2314046247882,
+            "y": 276.1206973776284
+          },
+          {
+            "x": 441.0127923754322,
+            "y": 399.6947821098714
+          },
+          {
+            "x": 441.37764708104555,
+            "y": 552.5
+          },
+          {
+            "x": 261.2987722462596,
+            "y": 385.2433312521345
+          },
+          {
+            "x": 334.9759186263161,
+            "y": 552.5
+          },
+          {
+            "x": 199.97221261556803,
+            "y": 540.2073539933962
+          },
+          {
+            "x": 104.01478976780601,
+            "y": 332.113772740611
+          },
+          {
+            "x": 259.8744016853571,
+            "y": 136.5
+          },
+          {
+            "x": 590.7524230932639,
+            "y": 209.07042652304065
+          },
+          {
+            "x": 617.4896378841615,
+            "y": 486.1850670488038
+          }
+        ],
+        "new": [
+          {
+            "x": 469.5963179633145,
+            "y": 257.2245924549061
+          },
+          {
+            "x": 278.459444079274,
+            "y": 283.89851449614696
+          },
+          {
+            "x": 220.25325405298153,
+            "y": 172.44465630847228
+          },
+          {
+            "x": 391.21260205970293,
+            "y": 333.6601958036563
+          },
+          {
+            "x": 331.2481801645042,
+            "y": 129.99999999999997
+          },
+          {
+            "x": 160.09208373397627,
+            "y": 296.65735849511793
+          },
+          {
+            "x": 495.0902415503481,
+            "y": 155.11860019786997
+          },
+          {
+            "x": 559.9079162660237,
+            "y": 416.99782034101463
+          },
+          {
+            "x": 357.8085146794427,
+            "y": 540
+          },
+          {
+            "x": 178.37198622575576,
+            "y": 435.963169851986
+          }
+        ],
+        "posters": [
+          {
+            "x": 473.5447105989982,
+            "y": 286.221596326388
+          },
+          {
+            "x": 293.4063490661278,
+            "y": 286.9992572480735
+          },
+          {
+            "x": 205.30634906612778,
+            "y": 141.63883477783506
+          },
+          {
+            "x": 385.52741509104465,
+            "y": 333.6601958036563
+          },
+          {
+            "x": 331.2481801645042,
+            "y": 126.89925724807347
+          },
+          {
+            "x": 160.09208373397627,
+            "y": 301.66317493887055
+          },
+          {
+            "x": 495.0902415503481,
+            "y": 126.12159632638803
+          },
+          {
+            "x": 561.6447105989982,
+            "y": 416.99782034101463
+          },
+          {
+            "x": 357.8085146794427,
+            "y": 540
+          },
+          {
+            "x": 178.37198622575576,
+            "y": 461.7631749388706
+          }
+        ]
+      }
+    },
+    {
+      "name": "computational blend",
+      "width": 1500,
+      "height": 900,
+      "weights": {
+        "personal": 0,
+        "metadata": 15,
+        "synopsis": 25
+      },
+      "old": {
+        "normalizedStress": 0.32745493773225676,
+        "neighborRecall": 0.55,
+        "topOneRecall": 0.4,
+        "matched": 11,
+        "total": 20,
+        "scale": 0.0017456797187351111,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              7,
+              5
+            ],
+            "hits": 0
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              3
+            ],
+            "actual": [
+              3,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              4
+            ],
+            "actual": [
+              1,
+              4
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              1,
+              0
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              2,
+              5
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              4,
+              0
+            ],
+            "hits": 0
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              5
+            ],
+            "hits": 1
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              1
+            ],
+            "actual": [
+              3,
+              9
+            ],
+            "hits": 0
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              2,
+              8
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "new": {
+        "normalizedStress": 0.25884920213470874,
+        "neighborRecall": 0.7,
+        "topOneRecall": 0.6,
+        "matched": 14,
+        "total": 20,
+        "scale": 0.00233843402600023,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              6,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              3
+            ],
+            "actual": [
+              5,
+              3
+            ],
+            "hits": 1
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              4
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              2,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              1
+            ],
+            "actual": [
+              9,
+              3
+            ],
+            "hits": 0
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              5,
+              1
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "posters": {
+        "normalizedStress": 0.25884920213470874,
+        "neighborRecall": 0.7,
+        "topOneRecall": 0.6,
+        "matched": 14,
+        "total": 20,
+        "scale": 0.00233843402600023,
+        "neighbors": [
+          {
+            "film": 0,
+            "expected": [
+              3,
+              6
+            ],
+            "actual": [
+              6,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 1,
+            "expected": [
+              2,
+              3
+            ],
+            "actual": [
+              5,
+              3
+            ],
+            "hits": 1
+          },
+          {
+            "film": 2,
+            "expected": [
+              1,
+              4
+            ],
+            "actual": [
+              4,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 3,
+            "expected": [
+              0,
+              1
+            ],
+            "actual": [
+              0,
+              1
+            ],
+            "hits": 2
+          },
+          {
+            "film": 4,
+            "expected": [
+              2,
+              0
+            ],
+            "actual": [
+              2,
+              1
+            ],
+            "hits": 1
+          },
+          {
+            "film": 5,
+            "expected": [
+              1,
+              2
+            ],
+            "actual": [
+              1,
+              2
+            ],
+            "hits": 2
+          },
+          {
+            "film": 6,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              4
+            ],
+            "hits": 1
+          },
+          {
+            "film": 7,
+            "expected": [
+              0,
+              3
+            ],
+            "actual": [
+              0,
+              3
+            ],
+            "hits": 2
+          },
+          {
+            "film": 8,
+            "expected": [
+              5,
+              1
+            ],
+            "actual": [
+              9,
+              3
+            ],
+            "hits": 0
+          },
+          {
+            "film": 9,
+            "expected": [
+              5,
+              2
+            ],
+            "actual": [
+              5,
+              1
+            ],
+            "hits": 1
+          }
+        ]
+      },
+      "legacyTarget": {
+        "old": {
+          "normalizedStress": 0.3200447411036722,
+          "neighborRecall": 0.5,
+          "topOneRecall": 0.6,
+          "matched": 10,
+          "total": 20,
+          "scale": 0.0007970149465512748,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                3,
+                4
+              ],
+              "actual": [
+                7,
+                5
+              ],
+              "hits": 0
+            },
+            {
+              "film": 1,
+              "expected": [
+                3,
+                2
+              ],
+              "actual": [
+                3,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                4
+              ],
+              "actual": [
+                1,
+                4
+              ],
+              "hits": 2
+            },
+            {
+              "film": 3,
+              "expected": [
+                1,
+                0
+              ],
+              "actual": [
+                1,
+                0
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                2,
+                0
+              ],
+              "actual": [
+                2,
+                5
+              ],
+              "hits": 1
+            },
+            {
+              "film": 5,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                4,
+                0
+              ],
+              "hits": 0
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                5
+              ],
+              "hits": 1
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 8,
+              "expected": [
+                5,
+                1
+              ],
+              "actual": [
+                3,
+                9
+              ],
+              "hits": 0
+            },
+            {
+              "film": 9,
+              "expected": [
+                5,
+                1
+              ],
+              "actual": [
+                2,
+                8
+              ],
+              "hits": 0
+            }
+          ]
+        },
+        "new": {
+          "normalizedStress": 0.2592144704398746,
+          "neighborRecall": 0.7,
+          "topOneRecall": 0.5,
+          "matched": 14,
+          "total": 20,
+          "scale": 0.001064679932319108,
+          "neighbors": [
+            {
+              "film": 0,
+              "expected": [
+                3,
+                4
+              ],
+              "actual": [
+                6,
+                3
+              ],
+              "hits": 1
+            },
+            {
+              "film": 1,
+              "expected": [
+                3,
+                2
+              ],
+              "actual": [
+                5,
+                3
+              ],
+              "hits": 1
+            },
+            {
+              "film": 2,
+              "expected": [
+                1,
+                4
+              ],
+              "actual": [
+                4,
+                1
+              ],
+              "hits": 2
+            },
+            {
+              "film": 3,
+              "expected": [
+                1,
+                0
+              ],
+              "actual": [
+                0,
+                1
+              ],
+              "hits": 2
+            },
+            {
+              "film": 4,
+              "expected": [
+                2,
+                0
+              ],
+              "actual": [
+                2,
+                1
+              ],
+              "hits": 1
+            },
+            {
+              "film": 5,
+              "expected": [
+                1,
+                2
+              ],
+              "actual": [
+                1,
+                2
+              ],
+              "hits": 2
+            },
+            {
+              "film": 6,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                4
+              ],
+              "hits": 1
+            },
+            {
+              "film": 7,
+              "expected": [
+                0,
+                3
+              ],
+              "actual": [
+                0,
+                3
+              ],
+              "hits": 2
+            },
+            {
+              "film": 8,
+              "expected": [
+                5,
+                1
+              ],
+              "actual": [
+                9,
+                3
+              ],
+              "hits": 0
+            },
+            {
+              "film": 9,
+              "expected": [
+                5,
+                1
+              ],
+              "actual": [
+                5,
+                1
+              ],
+              "hits": 2
+            }
+          ]
+        }
+      },
+      "positions": {
+        "old": [
+          {
+            "x": 485.82293061906313,
+            "y": 451.8979635807763
+          },
+          {
+            "x": 906.5763572279548,
+            "y": 567.6444433790725
+          },
+          {
+            "x": 972.146946496024,
+            "y": 758.6216518354365
+          },
+          {
+            "x": 791.3932592685795,
+            "y": 426.64596056158365
+          },
+          {
+            "x": 731.4603125231874,
+            "y": 765
+          },
+          {
+            "x": 479.83913241890184,
+            "y": 747.9102752969059
+          },
+          {
+            "x": 201.24668542113307,
+            "y": 534.3471114537829
+          },
+          {
+            "x": 470.4255520257307,
+            "y": 189
+          },
+          {
+            "x": 1142.3983240219789,
+            "y": 231.04617428964866
+          },
+          {
+            "x": 1318.690499977446,
+            "y": 595.7626672322207
+          }
+        ],
+        "new": [
+          {
+            "x": 926.423341111677,
+            "y": 334.8005634639952
+          },
+          {
+            "x": 618.7395929080997,
+            "y": 377.73907211574874
+          },
+          {
+            "x": 525.0418235974824,
+            "y": 198.3255443014432
+          },
+          {
+            "x": 800.2446764863511,
+            "y": 457.8432420253979
+          },
+          {
+            "x": 703.716582703836,
+            "y": 130
+          },
+          {
+            "x": 428.1970128400594,
+            "y": 398.2776990409215
+          },
+          {
+            "x": 967.4623400566579,
+            "y": 170.43481983071752
+          },
+          {
+            "x": 1071.8029871599406,
+            "y": 591.9964912806577
+          },
+          {
+            "x": 746.4722431425175,
+            "y": 790
+          },
+          {
+            "x": 457.6231973390215,
+            "y": 622.5260782983189
+          }
+        ],
+        "posters": [
+          {
+            "x": 926.423341111677,
+            "y": 334.8005634639952
+          },
+          {
+            "x": 618.7395929080997,
+            "y": 377.73907211574874
+          },
+          {
+            "x": 525.0418235974824,
+            "y": 198.3255443014432
+          },
+          {
+            "x": 800.2446764863511,
+            "y": 457.8432420253979
+          },
+          {
+            "x": 703.716582703836,
+            "y": 130
+          },
+          {
+            "x": 428.1970128400594,
+            "y": 398.2776990409215
+          },
+          {
+            "x": 967.4623400566579,
+            "y": 170.43481983071752
+          },
+          {
+            "x": 1071.8029871599406,
+            "y": 591.9964912806577
+          },
+          {
+            "x": 746.4722431425175,
+            "y": 790
+          },
+          {
+            "x": 457.6231973390215,
+            "y": 622.5260782983189
+          }
+        ]
+      }
+    }
+  ]
+}

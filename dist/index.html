@@ -1,214 +1,86 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Arrange artworks along semantic dimensions that you draw." />
-    <title>art axes</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23d9dcff'/%3E%3Cpath d='M11 46L51 17M14 15L49 50' stroke='%23332f3d' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='7' fill='white'/%3E%3C/svg%3E" />
-    <link rel="preconnect" href="https://www.artic.edu" />
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <main class="app-shell minimal-shell">
-      <header class="topbar minimal-topbar">
-        <div class="minimal-brand">
-          <span class="brand-cross" aria-hidden="true"></span>
-          <h1>art axes</h1>
-        </div>
-        <div class="header-actions">
-          <div class="mode-switch" role="group" aria-label="Mode for selected frame">
-            <button type="button" data-mode="axes" aria-pressed="true">axes</button>
-            <button type="button" data-mode="magnets" aria-pressed="false">magnets</button>
-          </div>
-          <button id="uploadButton" class="button upload-button" type="button">
-            <span class="upload-plus" aria-hidden="true">＋</span> add art
-          </button>
-          <button id="collectionButton" class="button collection-button" type="button" aria-expanded="false" aria-controls="filterPanel">
-            collection <span id="collectionCount">142</span>
-          </button>
-          <button id="drawButton" class="button button-primary draw-button" type="button" aria-pressed="false">
-            <span class="plus">＋</span> draw axis
-          </button>
-        </div>
-      </header>
-
-      <nav class="frame-bar" aria-label="Interpretive frames">
-        <div class="board-summary"><span>frames</span><strong id="frameCount">1</strong></div>
-        <div class="board-actions">
-          <button id="showAllFramesButton" class="show-all-frames" type="button">show all</button>
-          <button id="newFrameButton" class="new-frame-button" type="button"><span aria-hidden="true">＋</span> new frame</button>
-        </div>
-      </nav>
-
-      <section id="filterPanel" class="filter-panel" aria-label="Filter artwork collection" hidden>
-        <label class="filter-field filter-search">
-          <span>search</span>
-          <input id="collectionSearch" type="search" placeholder="artist, title, medium…" autocomplete="off" />
-        </label>
-        <fieldset class="filter-field include-field">
-          <legend>include</legend>
-          <div id="kindFilter" class="multi-filter">
-            <div id="customFilterOptions" class="custom-filter-options"></div>
-            <label><input type="checkbox" value="painting" /><span>paintings</span></label>
-            <label><input type="checkbox" value="paper" /><span>works on paper</span></label>
-            <label><input type="checkbox" value="sculpture" /><span>sculpture</span></label>
-            <label><input type="checkbox" value="object" /><span>objects</span></label>
-            <label><input type="checkbox" value="textile" /><span>textiles</span></label>
-            <label><input type="checkbox" value="photography" /><span>photography</span></label>
-          </div>
-          <small id="kindFilterHint">nothing selected means everything</small>
-        </fieldset>
-        <label class="filter-field">
-          <span>period</span>
-          <select id="eraFilter">
-            <option value="all">all periods</option>
-            <option value="ancient">before 1500</option>
-            <option value="pre1800">1500–1799</option>
-            <option value="1800s">1800–1899</option>
-            <option value="modern">1900 onward</option>
-          </select>
-        </label>
-        <div class="filter-footer">
-          <span id="filterSummary">142 available for the next axis</span>
-          <button id="clearFilters" class="text-button" type="button">clear</button>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A small workspace for relating films and exploring what connects them.">
+  <title>pairwise media graphs</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./"><span class="brand-cross" aria-hidden="true"></span><h1>pairwise media graphs</h1></a>
+      <span class="topbar-note">ghibli / 10 films</span>
+      <div class="header-actions">
+        <button id="collectionButton" type="button" aria-expanded="false" aria-controls="collectionPanel">collection <span class="badge">10</span></button>
+        <button id="pairsButton" type="button" hidden>relate films</button>
+        <button id="mapButton" class="primary" type="button" hidden>view map ↗</button>
+        <button id="personButton" class="quiet" type="button" hidden aria-label="Change participant"></button>
+      </div>
+    </header>
+    <nav class="frame-bar" aria-label="Session progress">
+      <span id="phase">a few connections to start</span>
+      <span id="progressText">your interpretation, one pair at a time</span>
+    </nav>
+    <section id="canvas" class="canvas">
+      <section id="welcome" class="welcome">
+        <div class="welcome-films" aria-hidden="true"><img src="./posters/0.jpg" alt=""><img src="./posters/1.jpg" alt=""><img src="./posters/2.jpg" alt=""></div>
+        <form id="nameForm" class="name-form">
+          <h2>what’s your name?</h2>
+          <p>we’ll look at two films at a time.<br>name a connection, or skip if nothing comes to mind.</p>
+          <label class="sr-only" for="personName">your name</label>
+          <input id="personName" maxlength="60" autocomplete="given-name" placeholder="your name" required>
+          <button class="primary" type="submit">start relating →</button>
+          <small>your name and connections stay in this browser.</small>
+        </form>
+      </section>
+      <section id="pairView" class="pair-view" hidden>
+        <div class="pair-top"><button id="previousPair" class="quiet" type="button">← previous</button><span id="pairNumber"></span><span class="pair-top-spacer" aria-hidden="true"></span></div>
+        <div id="pairFilms" class="pair-films"></div>
+        <form id="pairForm" class="pair-form">
+          <label id="pairPrompt" for="relationship">how do these relate to you?</label>
+          <input id="relationship" maxlength="100" placeholder="nature, growing up, war…" autocomplete="off">
+          <div class="pair-actions"><button id="skipPair" type="button">skip this pair</button><button id="savePair" class="primary" type="submit">save & next →</button></div>
+          <span id="pairFeedback" class="feedback" aria-live="polite">a word or short phrase is enough.</span>
+        </form>
+        <div class="pair-footer"><span id="relatedCount"></span><button id="earlyMap" class="text-button" type="button">make a map with what i have ↗</button></div>
+      </section>
+      <section id="completeView" class="complete-view" hidden>
+        <h2>that’s all 45 pairs.</h2><p id="completeSummary"></p><button id="finishMap" class="primary" type="button">make my map ↗</button><button id="reviewPairs" type="button">revisit the pairs</button>
+      </section>
+      <section id="mapView" class="map-view" hidden>
+        <aside class="map-sidebar" tabindex="0" aria-label="Map controls and personal relationships">
+          <h2 id="mapTitle">your map</h2>
+          <p class="sidebar-note">similar labels share a theme magnet. related themes can cluster through meaning and shared movies. films are pulled toward their themes. hover a poster to see its connections.</p>
+          <label class="magnet-visibility"><input id="showMagnets" type="checkbox" checked> show magnets</label>
+          <section class="source magnet-count-control"><label for="magnetCount">number of magnets <output id="magnetCountValue" for="magnetCount">0</output></label><input id="magnetCount" type="range" min="1" max="1" value="1" disabled><p id="magnetCountHint">add labels to create themes</p><p>fewer magnets group labels into broader themes and rearrange the films.</p></section>
+          <div class="section-heading">influence <span>relative weights</span></div>
+          <div id="sliders"></div><p class="small-note">drag themes to move them. click one to inspect its original labels or separate a grouping. similar meaning does not always mean the same thing, and it does not establish opposites.</p>
+          <p class="small-note">skipping adds no direct label. other connections can still reveal shared themes. poster appearance is not compared.</p>
+          <div class="section-heading"><span>your relationships</span><span id="connectionCount"></span></div>
+          <div id="contributions" class="contributions"></div>
+          <button id="resetMagnets" class="text-button" type="button">reset magnet positions</button><br><button id="continuePairs" class="text-button" type="button">keep relating films →</button>
+        </aside>
+        <div class="map-stage">
+          <div id="map" class="map" tabindex="0" aria-label="Film relationship map. Pinch to zoom; drag the canvas to move."><div id="mapWorld" class="map-world"></div></div>
+          <div class="map-tools"><button id="zoomOut" type="button" aria-label="Zoom out">−</button><button id="zoomReset" type="button" aria-label="Reset map view">100%</button><button id="zoomIn" type="button" aria-label="Zoom in">+</button></div>
+          <div class="map-legend"><span>— named relationship</span><span>┄ inferred connection</span><span>hover a poster for lines / tap on touch</span><span>pinch to zoom · drag to move</span></div>
+          <div id="modelStatus" class="model-status" role="status"></div><button id="retryLabels" class="retry-labels" type="button" hidden>retry label comparison</button><details id="labelErrorDetails" class="label-error" hidden><summary>why comparison failed</summary><p id="labelErrorMessage"></p></details>
+          <label class="pair-picker" for="pairSelect">inspect any pair<select id="pairSelect"></select></label>
         </div>
       </section>
-
-      <section class="workspace minimal-workspace">
-        <div class="canvas-wrap minimal-canvas-wrap">
-          <div id="artCanvas" class="art-canvas minimal-canvas" tabindex="0" aria-label="Artwork arrangement canvas">
-            <div id="worldLayer" class="world-layer board-surface">
-              <div id="boardFrames" class="board-frames"></div>
-            </div>
-            <div id="modelStatus" class="model-status" role="status" aria-live="polite" hidden></div>
-            <aside class="floating-axes" aria-label="Active dimensions">
-              <div class="floating-heading"><span>axes</span><strong id="axisCount">0</strong></div>
-              <div id="axisList" class="axis-list"></div>
-            </aside>
-            <div class="canvas-actions floating-actions">
-              <button id="zoomOutButton" class="zoom-button" type="button" title="zoom out" aria-label="zoom out">−</button>
-              <button id="zoomResetButton" class="zoom-level" type="button" title="reset zoom" aria-label="reset zoom">100%</button>
-              <button id="zoomInButton" class="zoom-button" type="button" title="zoom in" aria-label="zoom in">+</button>
-          <button id="resetButton" class="reset-button" type="button" title="clear axes in this frame">clear axes</button>
-            </div>
-            <div id="drawHint" class="draw-hint" hidden><b>drag to draw</b><span>release to name the axis</span></div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <aside id="detailPanel" class="detail-panel" aria-hidden="true" aria-label="Artwork details">
-      <button id="closeDetail" class="panel-close" type="button" aria-label="Close artwork details">×</button>
-      <div id="detailContent"></div>
-    </aside>
-    <div id="backdrop" class="backdrop" hidden></div>
-
-    <dialog id="axisDialog" class="axis-dialog">
-      <form method="dialog" id="axisForm">
-        <h2>what sits at either end?</h2>
-        <div class="axis-input-row">
-          <label><span>Start</span><input id="startLabel" name="start" autocomplete="off" required /></label>
-          <span class="input-line" aria-hidden="true"></span>
-          <label><span>End</span><input id="endLabel" name="end" autocomplete="off" required /></label>
-        </div>
-        <div class="scope-field">
-          <span>artworks on this axis</span>
-          <div class="scope-static"><span>this selection</span><small id="axisScopeHint"></small></div>
-        </div>
-        <div class="dialog-actions">
-          <button value="cancel" class="button button-quiet" formnovalidate>Cancel</button>
-          <button id="addAxisButton" value="default" class="button button-primary">Place dimension</button>
-        </div>
-      </form>
-    </dialog>
-
-    <dialog id="magnetDialog" class="axis-dialog">
-      <form method="dialog" id="magnetForm">
-        <h2>what should this magnet attract?</h2>
-        <label class="frame-name-field"><span>concept</span><input id="magnetLabel" maxlength="80" placeholder="dreamlike, geometric, quiet…" autocomplete="off" required /></label>
-        <p>Related artworks gather nearby. Drag the magnet to rearrange them.</p>
-        <p id="magnetScopeHint" role="status"></p>
-        <div class="dialog-actions">
-          <button value="cancel" class="button button-quiet" formnovalidate>cancel</button>
-          <button value="default" class="button button-primary">place magnet</button>
-        </div>
-      </form>
-    </dialog>
-
-    <dialog id="frameDialog" class="frame-dialog">
-      <form method="dialog" id="frameForm">
-        <span class="dialog-kicker">new interpretation</span>
-        <h2>make a frame</h2>
-        <p id="frameScopeSummary" class="frame-scope-summary">this frame will start empty. artworks appear when you draw its first axis.</p>
-        <label class="frame-name-field"><span>frame mode</span><select id="frameMode" name="mode"><option value="axes">axes</option><option value="magnets">magnets</option></select></label>
-        <label class="frame-name-field"><span>frame name</span><input id="frameName" name="name" maxlength="80" autocomplete="off" required /></label>
-        <div class="dialog-actions">
-          <button value="cancel" class="button button-quiet" formnovalidate>cancel</button>
-          <button value="default" class="button button-primary">create frame</button>
-        </div>
-      </form>
-    </dialog>
-
-    <dialog id="deleteFrameDialog" class="delete-frame-dialog">
-      <form method="dialog" id="deleteFrameForm">
-        <span class="dialog-kicker">delete frame</span>
-        <h2>remove this interpretation?</h2>
-        <p id="deleteFrameMessage" class="delete-frame-message"></p>
-        <div class="dialog-actions">
-          <button value="cancel" class="button button-quiet">cancel</button>
-          <button value="delete" class="button delete-frame-confirm">delete frame</button>
-        </div>
-      </form>
-    </dialog>
-
-    <dialog id="uploadDialog" class="upload-dialog">
-      <form id="uploadForm">
-        <div class="dialog-heading">
-          <div>
-            <span class="dialog-kicker">your collection</span>
-            <h2>add your own art</h2>
-          </div>
-          <button id="closeUpload" class="dialog-close" type="button" aria-label="Close">×</button>
-        </div>
-
-        <div id="uploadDropzone" class="upload-dropzone">
-          <input id="artFile" name="artFile" type="file" accept=".zip,image/jpeg,image/png,image/webp,image/gif" multiple aria-hidden="true" tabindex="-1" />
-          <input id="artFolder" name="artFolder" type="file" accept="image/jpeg,image/png,image/webp,image/gif" webkitdirectory directory multiple aria-hidden="true" tabindex="-1" />
-          <span class="upload-placeholder">
-            <b>drop a folder, zip, or images</b>
-            <small>up to 500 artworks · your files stay in this browser</small>
-            <span class="upload-choices">
-              <button id="chooseFilesButton" type="button">choose files</button>
-              <button id="chooseFolderButton" type="button">choose folder</button>
-            </span>
-          </span>
-          <span class="upload-preview" hidden>
-            <img id="uploadPreviewImage" alt="Selected artwork preview" />
-            <span><b id="uploadFileName"></b><small id="uploadFileSummary">choose another</small></span>
-          </span>
-        </div>
-
-        <div class="upload-fields">
-          <label id="uploadTitleField" class="upload-field upload-title"><span>title</span><input id="uploadTitle" name="title" maxlength="120" placeholder="untitled" /></label>
-          <p id="batchTitleNote" class="batch-title-note" hidden>titles will be taken from the image filenames</p>
-          <label class="upload-field upload-collection"><span>collection name</span><input id="uploadCollection" name="collection" maxlength="80" placeholder="your art" /></label>
-          <label class="upload-field"><span>artist</span><input id="uploadArtist" name="artist" maxlength="120" placeholder="unknown artist" /></label>
-          <label class="upload-field"><span>year</span><input id="uploadYear" name="year" inputmode="numeric" maxlength="12" placeholder="2026" /></label>
-        </div>
-
-        <p id="uploadError" class="upload-error" role="alert" hidden></p>
-        <div class="upload-footer">
-          <p>kept privately in this browser</p>
-          <div class="dialog-actions">
-            <button id="cancelUpload" class="button button-quiet" type="button">cancel</button>
-            <button id="addArtworkButton" class="button button-primary" type="submit">add to collection</button>
-          </div>
-        </div>
-      </form>
-    </dialog>
-
-    <script src="./artworks.js"></script>
-    <script src="./app.js"></script>
-  </body>
+      <aside id="collectionPanel" class="collection-panel" hidden aria-label="Film collection"><div class="panel-heading"><h2>the collection</h2><button id="closeCollection" class="quiet" type="button" aria-label="Close collection">×</button></div><div id="collection" class="collection"></div><p class="small-note">posters via <a href="https://www.themoviedb.org/" target="_blank" rel="noreferrer">TMDB</a> / <a href="https://ghibliapi.vercel.app/" target="_blank" rel="noreferrer">Studio Ghibli API</a>.</p></aside>
+    </section>
+  </main>
+  <dialog id="inspector" class="inspector"><div class="panel-heading"><span>connection sources</span><button id="closeInspector" class="quiet" type="button" aria-label="Close connection sources">×</button></div><div id="inspectorContent"></div></dialog>
+  <dialog id="participantDialog" class="participant-dialog"><form id="participantForm"><h2>who’s relating?</h2><p>use a different name to start a separate map. existing maps stay saved in this browser.</p><label for="newName">name</label><input id="newName" maxlength="60" required><div class="dialog-actions"><button id="nameScreen" class="quiet" type="button">name screen</button><button id="cancelParticipant" type="button">cancel</button><button type="submit" class="primary">open map</button></div></form></dialog>
+  <script src="./films.js"></script>
+  <script src="./synopsis-scores.js"></script>
+  <script src="./personal-similarity.js"></script>
+  <script src="./theme-preferences.js"></script>
+  <script src="./map-navigation.js"></script>
+  <script src="./movie-layout.js"></script>
+  <script src="./app.js"></script>
+</body>
 </html>

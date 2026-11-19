@@ -1,8 +1,12 @@
 {
-  "name": "art-axes",
+  "name": "pairwise-media-graphs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node scripts/serve.js"
+    "dev": "node scripts/serve.js",
+    "test": "node --test tests/*.test.cjs"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "3.8.1"
   }
 }
