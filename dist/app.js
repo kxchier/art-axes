@@ -2,11 +2,15 @@ const $ = id => document.getElementById(id);
 const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 }[char]));
-const STORAGE_KEY = 'art-axes-film-sessions-v2';
+// Group-based sessions start fresh; never migrate pairwise participant evidence.
+const STORAGE_KEY = 'art-axes-film-sessions-v3';
 const sources = [
   ['personal', 'personal label meaning', 'similar labels combine into shared theme magnets. each movie is pulled toward its themes.'],
   ['metadata', 'factual metadata', 'shared director + release-year proximity.'],
-  ['synopsis', 'synopsis meaning', 'AI compares the meaning of the short plot summaries.']
+  ['synopsis', 'synopsis similarity', 'meaning of the short plot summaries (MiniLM).'],
+  ['title', 'title similarity', 'meaning of the words in the film titles (MiniLM).'],
+  ['visual', 'poster appearance', 'colors and composition of the poster artwork.'],
+  ['clip', 'poster meaning · CLIP', 'learned image features: subjects, scenes and concepts in the posters.']
 ];
 
 // Round-robin ordering visits all ten films in every round, without repeating a pair.
@@ -22,26 +26,18 @@ function makePairs() {
 const pairs = makePairs();
 const pairKey = (a, b) => [a, b].sort((x, y) => x - y).join('-');
 const blankSession = name => ({
-  name, answers: {}, cursor: 0, view: 'pairs', weights: { personal: 60, metadata: 15, synopsis: 25 }, magnetPositions: {}, themeSeparations: [], themeMerges: [], magnetCount: null, showMagnets: true
+  name, answers: {}, cursor: 0, view: 'groups', umap: { nNeighbors: 4, minDist: .2, seed: 42 }, groups: [], groupCursor: 0, groupScale: 3, magnets: [], weights: { personal: 60, metadata: 15, synopsis: 25, title: 0, visual: 0, clip: 0 }, magnetPositions: {}, themeSeparations: [], themeMerges: [], magnetCount: null, showMagnets: true
 });
 let storage = { active: '', sessions: {} };
 let storageAvailable = true;
 try {
+  localStorage.removeItem('art-axes-film-sessions-v2');
   const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
   if (saved && typeof saved.sessions === 'object' && saved.sessions) {
     const sessions = {};
     for (const [key, session] of Object.entries(saved.sessions)) {
-      if (!session || typeof session.name !== 'string' || !session.answers || typeof session.answers !== 'object') continue;
+      if (!session || typeof session.name !== 'string') continue;
       const clean = blankSession(session.name.slice(0, 60));
-      for (const [a, b] of pairs) {
-        const answer = session.answers[pairKey(a, b)];
-        if (answer && (answer.skipped === true || typeof answer.label === 'string')) {
-          clean.answers[pairKey(a, b)] = {
-            label: typeof answer.label === 'string' ? answer.label.slice(0, 100) : '',
-            skipped: !!answer.skipped
-          };
-        }
-      }
       for (const [source] of sources) {
         if (Number.isFinite(session.weights?.[source])) clean.weights[source] = Math.max(0, Math.min(100, session.weights[source]));
       }
@@ -55,7 +51,12 @@ try {
       if (Number.isInteger(session.magnetCount) && session.magnetCount > 0) clean.magnetCount = session.magnetCount;
       clean.showMagnets = session.showMagnets !== false;
       clean.cursor = Number.isInteger(session.cursor) ? Math.max(0, Math.min(45, session.cursor)) : 0;
-      clean.view = session.view === 'map' ? 'map' : 'pairs';
+      clean.view = ['map', 'groups'].includes(session.view) ? session.view : 'groups';
+      clean.umap = UmapLayout.settings(session.umap, films.length);
+      clean.groupScale = session.groupScale === 5 ? 5 : 3;
+      clean.groupCursor = Number.isInteger(session.groupCursor) ? Math.max(0, Math.min(5, session.groupCursor)) : 0;
+      clean.magnets = Array.isArray(session.magnets) ? session.magnets.filter(m => m && typeof m.id === 'string' && typeof m.label === 'string' && Array.isArray(m.ratings)).slice(0, 100).map(m => ({id: m.id, label: m.label.slice(0, 100), ratings: films.map((_, i) => Number.isFinite(m.ratings[i]) ? Math.max(0, Math.min(100, m.ratings[i])) : 0), groupMembers: Array.isArray(m.groupMembers) ? [...new Set(m.groupMembers.filter(i => Number.isInteger(i) && i >= 0 && i < films.length))] : [], rankOrder: Array.isArray(m.rankOrder) ? [...new Set(m.rankOrder.filter(i => Number.isInteger(i) && i >= 0 && i < films.length))] : []})) : [];
+      clean.groups = Array.isArray(session.groups) ? session.groups.filter(g => Array.isArray(g) && g.every(i => Number.isInteger(i) && i >= 0 && i < films.length)) : [];
       sessions[key] = clean;
     }
     storage = { active: Object.hasOwn(sessions, saved.active) ? saved.active : '', sessions };
@@ -138,10 +139,19 @@ const localLabelServer = ['127.0.0.1', 'localhost', '[::1]'].includes(location.h
 
 function refreshPersonalProfiles(retry = false) {
   const relations = relationships();
-  const signature = JSON.stringify(relations);
+  const signature = JSON.stringify([relations, session.magnets]);
   if (profileSignature !== signature) {
     profileSignature = signature;
-    personalProfiles = PersonalSimilarity.buildProfiles(relations, films.length);
+    personalProfiles = PersonalSimilarity.buildProfiles([], films.length);
+    for (const magnet of session.magnets || []) {
+      const label = PersonalSimilarity.normalizeLabel(magnet.label);
+      magnet.ratings.forEach((rating, i) => {
+        if (rating > 0) {
+          if (!personalProfiles[i].has(label)) personalProfiles[i].set(label, []);
+          personalProfiles[i].get(label).push({ a: i, b: i, label, rating, magnet: magnet.id });
+        }
+      });
+    }
     personalScores.clear();
   }
   const labels = [...new Set(personalProfiles.flatMap(profile => [...profile.keys()]))];
@@ -291,36 +301,41 @@ function openParticipant(name) {
   save();
   render();
 }
-function relationships() {
-  return pairs.filter(([a, b]) => session.answers[pairKey(a, b)]?.label)
-    .map(([a, b]) => ({ a, b, label: session.answers[pairKey(a, b)].label }));
-}
+// Pairwise comparisons remain inspectable, but are no longer participant inputs.
+function relationships() { return []; }
 function reviewedCount() { return Object.keys(session.answers).length; }
 function poster(index, className = '') {
   const film = films[index];
   return `<img class="${className}" src="${film.poster}" alt="${escapeHTML(film.title)} poster" draggable="false">`;
 }
 function render() {
-  const relating = !!session && session.view !== 'map' && session.cursor < pairs.length;
+  const relating = !!session && session.view === 'pairs' && session.cursor < pairs.length;
   document.documentElement.classList.toggle('is-relating', relating);
+  document.documentElement.classList.toggle('is-grouping', !!session && session.view === 'groups');
   document.documentElement.classList.toggle('is-mapping', !!session && session.view === 'map');
   $('welcome').hidden = !!session;
-  $('pairView').hidden = !session || session.view === 'map' || session.cursor === pairs.length;
-  $('completeView').hidden = !session || session.view === 'map' || session.cursor !== pairs.length;
+  $('groupView').hidden = !session || session.view !== 'groups';
+  $('pairView').hidden = !session || session.view !== 'pairs' || session.cursor === pairs.length;
+  $('completeView').hidden = !session || session.view !== 'pairs' || session.cursor !== pairs.length;
   $('mapView').hidden = !session || session.view !== 'map';
   $('mapButton').hidden = !session || session.view === 'map';
   $('pairsButton').hidden = !session || session.view !== 'map';
   $('personButton').hidden = !session;
   if (!session) {
-    $('phase').textContent = 'a few connections to start';
-    $('progressText').textContent = 'your interpretation, one pair at a time';
+    $('phase').textContent = '01 / discover connections';
+    $('progressText').textContent = 'your interpretation, one group at a time';
     return;
   }
   $('personButton').textContent = session.name;
   $('phase').textContent = session.view === 'map' ? `${session.name}’s map` : `${session.name} / relating films`;
-  $('progressText').textContent = storageAvailable ? `${reviewedCount()} / 45 pairs visited · ${relationships().length} connections` : 'storage unavailable / saved for this visit only';
+  $('progressText').textContent = storageAvailable && session.view === 'map' ? `${session.magnets.length} personal magnets · Ghibli / ${films.length} films` : storageAvailable ? `${reviewedCount()} / 45 pairs visited · ${relationships().length} connections` : 'storage unavailable / saved for this visit only';
+  if (session.view === 'groups') {
+    $('phase').textContent = '01 / label groups → 02 / rank within groups → 03 / explore';
+    $('progressText').textContent = `${session.magnets.length} personal magnets · Ghibli / 10 films`;
+  }
   refreshPersonalProfiles();
   if (session.view === 'map') renderMapView();
+  else if (session.view === 'groups') renderGroups();
   else if (session.cursor < pairs.length) renderPair();
   else $('completeSummary').textContent = `${relationships().length} connections, ${45 - relationships().length} skipped. let’s see how they sit alongside the films’ descriptions.`;
 }
@@ -352,7 +367,7 @@ $('nameForm').onsubmit = event => {
   const name = $('personName').value.trim();
   if (!name) return;
   openParticipant(name);
-  if (session.view !== 'map' && session.cursor < pairs.length) $('relationship').focus();
+  if (session.view === 'pairs' && session.cursor < pairs.length) $('relationship').focus();
 };
 $('pairForm').onsubmit = event => {
   event.preventDefault();
@@ -383,7 +398,7 @@ function showMap() {
   render();
 }
 function showPairs() {
-  session.view = 'pairs';
+  session.view = 'groups';
   if (session.cursor === pairs.length) session.cursor = 0;
   save();
   render();
@@ -422,14 +437,16 @@ $('closeCollection').onclick = () => {
 
 // Personal label vectors run locally in a worker; public synopsis vectors were precomputed.
 function evidence(a, b) {
-  const answer = session.answers[pairKey(a, b)];
   return {
     personal: personalEvidence(a, b).score,
     personalDetails: personalEvidence(a, b),
-    label: answer?.label || '',
-    skipped: answer?.skipped || false,
+    label: '',
+    skipped: false,
     metadata: ((films[a].director === films[b].director ? 1 : 0) + Math.max(0, 1 - Math.abs(films[a].year - films[b].year) / 30)) / 2,
-    synopsis: synopsisData.scores[a][b]
+    synopsis: synopsisData.scores[a][b],
+    title: mediaData.sources.title.scores[a][b],
+    visual: mediaData.sources.visual.scores[a][b],
+    clip: mediaData.sources.clip.scores[a][b]
   };
 }
 function affinity(a, b) {
@@ -444,10 +461,13 @@ function affinity(a, b) {
 }
 function computePositions() {
   const magnets = getMagnets();
-  const targets = personalProfiles.map(profile => PersonalSimilarity.magnetTarget(profile, magnets, themeByLabel));
-  const result = MovieLayout.layoutMovies({
+  const targets = personalProfiles.map(profile => ratedMagnetTarget(profile, magnets, themeByLabel));
+  const result = UmapLayout.layoutMovies({
+    umap: session.umap,
     metadata: films.map((_, a) => films.map((_, b) => evidence(a, b).metadata)),
-    synopsis: synopsisData.scores, weights: session.weights, targets,
+    synopsis: synopsisData.scores,
+    scoreMatrices: Object.fromEntries(Object.entries(mediaData.sources).map(([key,source])=>[key,source.scores])),
+    weights: session.weights, targets,
     width: $('mapWorld').clientWidth || 1000, height: $('mapWorld').clientHeight || 760,
     cardWidth: matchMedia('(max-width: 700px)').matches ? 55 : 78,
     cardHeight: matchMedia('(max-width: 700px)').matches ? 110 : 150
@@ -458,6 +478,8 @@ function computePositions() {
 function renderMapView() {
   $('mapTitle').textContent = `${session.name}’s map`;
   $('sliders').innerHTML = sources.map(([key, title, description]) => `<div class="source"><label for="weight-${key}">${title}<output id="out-${key}">${session.weights[key]}</output></label><input id="weight-${key}" data-weight="${key}" type="range" min="0" max="100" value="${session.weights[key]}"><p>${description}</p></div>`).join('');
+  renderUmapControls();
+  renderRatingLinks();
   const relations = relationships();
   $('connectionCount').textContent = relations.length;
   $('contributions').innerHTML = relations.length ? relations.map(r => `<button class="relation" data-pair="${r.a},${r.b}"><b>${escapeHTML(r.label)}</b><small>${escapeHTML(films[r.a].title)} ↔ ${escapeHTML(films[r.b].title)}</small></button>`).join('') : '<p class="small-note">no personal connections yet. you can add them whenever you like.</p>';
@@ -466,14 +488,18 @@ function renderMapView() {
   drawMap();
   if (!viewInitialized) { fitMapView(); viewInitialized = true; }
 }
-function drawMap() {
+let mapMotionTimer;
+function drawMap(animate = false) {
+  const moving = animate && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const previous = moving ? new Map([...$('mapWorld').querySelectorAll('[data-film]')].map(node=>[node.dataset.film,node.getBoundingClientRect()])) : new Map();
   mapPositions ||= computePositions();
   const mapWidth = $('mapWorld').clientWidth || 1000;
   const mapHeight = $('mapWorld').clientHeight || 700;
   const unitX = mapWidth / 100, unitY = mapHeight / 100;
   $('modelStatus').textContent = Object.values(session.weights).some(weight => weight > 0)
-    ? `${labelStatus} · synopsis: precomputed AI`
+    ? `${labelStatus} · comparisons: precomputed locally`
     : 'all sources are off / hover a poster to inspect its statements';
+  $('modelStatus').textContent += ' · layout: UMAP + personal magnets';
   $('retryLabels').hidden = !labelError;
   $('labelErrorDetails').hidden = !labelError;
   $('labelErrorMessage').textContent = labelErrorDetails;
@@ -510,6 +536,17 @@ function drawMap() {
   $('mapWorld').classList.toggle('magnets-hidden', session.showMagnets === false);
   applyView();
   revealConnections(pinnedFilm ?? activeFilm);
+  if (previous.size) {
+    $('mapWorld').classList.add('is-moving');
+    clearTimeout(mapMotionTimer);
+    $('mapWorld').querySelectorAll('[data-film]').forEach(node=>{
+      const before=previous.get(node.dataset.film),after=node.getBoundingClientRect();
+      if (!before) return;
+      const dx=(before.left-after.left)/zoom,dy=(before.top-after.top)/zoom;
+      node.animate([{transform:`translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`},{transform:'translate(-50%, -50%)'}],{duration:550,easing:'cubic-bezier(.22,.61,.36,1)'});
+    });
+    mapMotionTimer=setTimeout(()=>$('mapWorld').classList.remove('is-moving'),550);
+  } else { clearTimeout(mapMotionTimer); $('mapWorld').classList.remove('is-moving'); }
 }
 function revealConnections(film) {
   activeFilm = film;
@@ -561,13 +598,16 @@ $('resetMagnets').onclick = () => {
   mapPositions = null;
   save(); drawMap();
 };
+let influenceFrame = null;
 $('sliders').oninput = event => {
   const key = event.target.dataset.weight;
   if (!sources.some(([source]) => source === key)) return;
   session.weights[key] = Number(event.target.value);
   $('out-' + key).textContent = event.target.value;
+  renderUmapControls();
   mapPositions = null;
-  drawMap();
+  if (influenceFrame !== null) cancelAnimationFrame(influenceFrame);
+  influenceFrame = requestAnimationFrame(() => { influenceFrame = null; if (session?.view === 'map') drawMap(true); });
   save();
 };
 $('contributions').onclick = event => {
@@ -585,6 +625,8 @@ function inspectTheme(id) {
     const origins = relationships().filter(relation => PersonalSimilarity.splitLabels(relation.label).includes(label));
     return `<section class="profile-label"><b>${escapeHTML(label)}</b>${themeByLabel.get(label) && themeByLabel.get(label) !== label ? `<span class="small-note">shared theme: ${escapeHTML(themeByLabel.get(label))}</span>` : ''}${origins.map(origin => `<button class="text-button" data-origin="${origin.a},${origin.b}">${escapeHTML(origin.label)} / ${escapeHTML(films[origin.a].title)} ↔ ${escapeHTML(films[origin.b].title)}</button>`).join('')}</section>`;
   }).join('')}</div><p>Plural variants and your explicitly requested groupings are combined. Automatic themes combine close semantic matches. Lowering the magnet count combines the closest themes into broader groups, which can contain different but related ideas. The magnet uses the group’s average embedding; its title is a representative original label. Nearby clusters use both label meaning and shared movies, rather than evenly spaced positions.</p>${theme.labels.length > 1 ? '<button id="separateTheme" class="primary" type="button">keep these labels separate</button>' : ''}<form id="combineTheme" class="combine-theme"><label for="themeMergeTarget">combine with another theme</label><select id="themeMergeTarget"><option value="">choose a theme…</option>${themeGroups.filter(other => other.id !== id).map(other => `<option value="${escapeHTML(other.id)}">${escapeHTML(other.id)}</option>`).join('')}</select><button type="submit">combine themes</button></form>`;
+  const ratedMembers = session.magnets.filter(m => theme.labels.includes(PersonalSimilarity.normalizeLabel(m.label)));
+  $('inspectorContent').insertAdjacentHTML('afterbegin', ratedMembers.map(m => `<button class="relation" data-edit-magnet="${escapeHTML(m.id)}">edit ${escapeHTML(m.label)} / film strengths →</button>`).join(''));
   if (theme.labels.length > 1) $('separateTheme').onclick = () => {
     session.magnetCount = null;
     session.themeSeparations ||= [];
@@ -615,7 +657,7 @@ function inspectTheme(id) {
 function profileHTML(index) {
   const profile = personalProfiles[index];
   if (!profile.size) return '<p>no labels yet</p>';
-  return [...profile].map(([label, origins]) => `<div class="profile-label"><b>${escapeHTML(label)}</b>${themeByLabel.get(label) && themeByLabel.get(label) !== label ? `<span class="small-note">shared theme: ${escapeHTML(themeByLabel.get(label))}</span>` : ''}${origins.map(origin => `<button class="text-button" type="button" data-origin="${origin.a},${origin.b}">from ${escapeHTML(films[origin.a].title)} ↔ ${escapeHTML(films[origin.b].title)}</button>`).join('')}</div>`).join('');
+  return [...profile].map(([label, origins]) => `<div class="profile-label"><b>${escapeHTML(label)}</b>${themeByLabel.get(label) && themeByLabel.get(label) !== label ? `<span class="small-note">shared theme: ${escapeHTML(themeByLabel.get(label))}</span>` : ''}${origins.map(origin => origin.magnet ? `<button class="text-button" type="button" data-edit-magnet="${escapeHTML(origin.magnet)}">your rating: ${origin.rating} / 100 · edit</button>` : `<button class="text-button" type="button" data-origin="${origin.a},${origin.b}">from ${escapeHTML(films[origin.a].title)} ↔ ${escapeHTML(films[origin.b].title)}</button>`).join('')}</div>`).join('');
 }
 function personalMatchHTML(details) {
   if (details.reason === 'missing') return '<p>one or both films have no personal labels yet. this source is excluded for the pair.</p>';
@@ -623,32 +665,24 @@ function personalMatchHTML(details) {
   return `<h3>strongest label matches</h3><ul class="label-matches">${details.matches.slice(0, 5).map(match => `<li><span>${escapeHTML(match.left)} ↔ ${escapeHTML(match.right)}</span><span>${Math.round(match.score * 100)} / 100</span></li>`).join('')}</ul>`;
 }
 $('inspectorContent').onclick = event => {
+  const edit = event.target.closest('[data-edit-magnet]');
+  if (edit) { $('inspector').close(); openRatings(edit.dataset.editMagnet); return; }
   const origin = event.target.closest('[data-origin]');
   if (origin) inspect(...origin.dataset.origin.split(',').map(Number));
 };
 function inspect(a, b) {
   inspection = [a, b];
   const values = evidence(a, b), x = films[a], y = films[b];
-  $('inspectorContent').innerHTML = `<div class="inspect-pair">${poster(a)}${poster(b)}</div><h2>${escapeHTML(x.title)} ↔ ${escapeHTML(y.title)}</h2><p>combined affinity: ${Math.round(affinity(a, b) * 100)} / 100. this is a pairwise summary. the map fits distances between movies using metric MDS, balanced with personal theme magnets. Dotted leaders mark posters moved away from their semantic position to prevent overlap.</p>
-    <section class="source-block"><h3>personal label meaning / ${values.personal === null ? 'not available' : Math.round(values.personal * 100)}</h3><p>each original connection gives both films its label magnets. similar labels are combined into shared themes; theme magnets cluster using label meaning and the movies that share them. each film is pulled toward the average position of its own magnets; metadata and synopsis comparisons also influence it.</p>
+  $('inspectorContent').innerHTML = `<div class="inspect-pair">${poster(a)}${poster(b)}</div><h2>${escapeHTML(x.title)} ↔ ${escapeHTML(y.title)}</h2><p>combined affinity: ${Math.round(affinity(a, b) * 100)} / 100. this is a pairwise summary. UMAP proposes a computational layout; your ratings then pull films toward personal theme magnets. UMAP emphasizes neighborhoods, so map distances are not exact similarity scores. Dotted leaders mark posters moved away from their semantic position to prevent overlap.</p>
+    <section class="source-block"><h3>personal label meaning / ${values.personal === null ? 'not available' : Math.round(values.personal * 100)}</h3><p>your group themes and per-film strengths supply each film’s personal magnets. similar labels are combined into shared themes; theme magnets cluster using label meaning and the movies that share them. each film is pulled toward the average position of its own magnets; enabled text, metadata and poster comparisons also influence it.</p>
       <div class="label-profiles"><div><h4>${escapeHTML(x.title)}</h4>${profileHTML(a)}</div><div><h4>${escapeHTML(y.title)}</h4>${profileHTML(b)}</div></div>
       ${personalMatchHTML(values.personalDetails)}
       <p>the summary score averages each label’s closest semantic match in the other film’s labels, then average both directions. labels in the same shared theme count once. the layout uses the label magnets rather than this score as a direct movie-to-movie pull. you can drag a magnet to express a placement you disagree with; semantic relatedness does not establish opposition.</p>
-      <h3>your original connection</h3><p>${values.label ? escapeHTML(values.label) : values.skipped ? 'you skipped this direct pair; other labels can still connect the films.' : 'no direct statement for this pair yet.'}</p>
-      <form id="revisionForm"><label class="sr-only" for="revisionLabel">relationship</label><input id="revisionLabel" maxlength="100" value="${escapeHTML(values.label)}" placeholder="nature, growing up…" required><button class="primary" type="submit">${values.label ? 'revise connection' : 'add connection'}</button></form></section>
+    </section>
     <section class="source-block"><h3>factual metadata / ${Math.round(values.metadata * 100)}</h3><p>${escapeHTML(x.director)} / ${x.year}<br>${escapeHTML(y.director)} / ${y.year}</p><p>director match (1 or 0) and year proximity (1 − year gap / 30, minimum 0), weighted equally. locally stored from the unofficial Studio Ghibli API: <a href="${x.metadataSource}" target="_blank" rel="noreferrer">${escapeHTML(x.title)} ↗</a> / <a href="${y.metadataSource}" target="_blank" rel="noreferrer">${escapeHTML(y.title)} ↗</a>. not a live feed. posters are TMDB artwork, not metadata inputs.</p></section>
-    <section class="source-block"><h3>synopsis meaning / ${Math.round(values.synopsis * 100)}</h3><p><b>${escapeHTML(x.title)}</b><br>${escapeHTML(x.synopsis)}</p><p><b>${escapeHTML(y.title)}</b><br>${escapeHTML(y.synopsis)}</p><p>these exact summaries were embedded with <a href="https://huggingface.co/Xenova/all-MiniLM-L6-v2" target="_blank" rel="noreferrer">MiniLM</a>. score = cosine similarity between normalized text embeddings (negative values clamped to 0). calculated once locally; personal labels use the same model on this computer: through the local server on localhost, or in a browser worker on a static site. no labels are sent to a third-party inference service. poster appearance is not an input.</p></section>
+    <section class="source-block"><h3>synopsis meaning / ${Math.round(values.synopsis * 100)}</h3><p><b>${escapeHTML(x.title)}</b><br>${escapeHTML(x.synopsis)}</p><p><b>${escapeHTML(y.title)}</b><br>${escapeHTML(y.synopsis)}</p><p>these exact summaries were embedded with <a href="https://huggingface.co/Xenova/all-MiniLM-L6-v2" target="_blank" rel="noreferrer">MiniLM</a>. score = cosine similarity between normalized text embeddings (negative values clamped to 0). calculated once locally; personal labels use the same model on this computer: through the local server on localhost, or in a browser worker on a static site. no labels are sent to a third-party inference service. poster appearance is not an input to the synopsis score.</p></section>
+    ${['title','visual','clip'].map(key=>`<section class="source-block"><h3>${escapeHTML(sources.find(source=>source[0]===key)[1])} / ${Math.round(values[key]*100)}</h3><p>${escapeHTML(mediaData.sources[key].method)}</p><p>source: ${escapeHTML(mediaData.sources[key].model)}. ${key==='title' ? 'compares the film titles shown above.' : 'compares the local poster images shown above, including any lettering in the artwork.'}</p></section>`).join('')}
     <p>source scores are multiplied by their relative influence, then averaged. personal input is excluded while its embeddings load or if either film has no labels. all weights at zero gives no affinity. dashed lines show each film’s two strongest inferred connections above 40/100; every pair is inspectable in the selector.</p>`;
-  $('revisionForm').onsubmit = event => {
-    event.preventDefault();
-    const label = $('revisionLabel').value.trim();
-    if (!label) return;
-    session.answers[pairKey(a, b)] = { label, skipped: false };
-    mapPositions = null;
-    save();
-    render();
-    inspect(a, b);
-  };
   if (!$('inspector').open) $('inspector').showModal();
 }
 $('closeInspector').onclick = () => { inspection = null; $('inspector').close(); };
@@ -831,6 +865,8 @@ $('map').onpointercancel = endMapPointer;
 window.addEventListener('blur', () => {
   mapPointers.clear(); pinchStart = null; nativeGesture = null; endDrag();
 });
+initGroups();
+initUmapControls();
 render();
 
 let lastMapSize = '';
@@ -843,3 +879,36 @@ new ResizeObserver(entries => {
     drawMap();
   }
 }).observe($('map'));
+
+function renderUmapControls() {
+  const config = session.umap;
+  $('umapNeighbors').max = films.length - 1;
+  $('umapNeighbors').value = config.nNeighbors;
+  $('umapNeighborsValue').textContent = config.nNeighbors;
+  $('umapMinDist').value = config.minDist;
+  $('umapMinDistValue').textContent = config.minDist.toFixed(2);
+  const disabled = !sources.some(([key]) => key !== 'personal' && session.weights[key] > 0);
+  for (const id of ['umapNeighbors', 'umapMinDist', 'umapReshuffle']) $(id).disabled = disabled;
+  $('umapHint').textContent = disabled ? 'turn up a text, metadata or poster influence to explore the UMAP layout. only your magnets influence labeled films right now.' : 'these controls change the computational layout; your ratings and magnets still influence placement. gaps aren’t proof of separate groups.';
+}
+function initUmapControls() {
+  let frame = null;
+  const update = () => {
+    mapPositions = null;
+    save();
+    if (frame !== null) cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => { frame = null; if (session?.view === 'map') { drawMap(true); } });
+  };
+  $('umapNeighbors').oninput = event => {
+    session.umap.nNeighbors = Number(event.target.value);
+    $('umapNeighborsValue').textContent = event.target.value;
+    update();
+  };
+  $('umapMinDist').oninput = event => {
+    session.umap.minDist = Number(event.target.value);
+    $('umapMinDistValue').textContent = session.umap.minDist.toFixed(2);
+    update();
+  };
+  $('umapReshuffle').onclick = () => { session.umap.seed = (session.umap.seed + 1) >>> 0; update(); };
+  $('umapReset').onclick = () => { session.umap = UmapLayout.settings({}, films.length); renderUmapControls(); update(); };
+}

@@ -152,7 +152,7 @@
     const anchors=targets.map(target=>target&&weights.personal?{
       x:(target.x*width-transform.offset.x)/transform.scale+transform.center.x,
       y:(target.y*height-transform.offset.y)/transform.scale+transform.center.y,
-      weight:weights.personal/(total||1)
+      weight:weights.personal/(total||1)*(target.strength ?? 1)
     }:null);
     const constrained=anchors.some(Boolean)?metricMDS(distances,{
       initial:computational.points,anchors,pairWeight:computationalWeight/(total||1)/Math.max(1,n-1),starts

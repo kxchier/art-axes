@@ -14,27 +14,28 @@
       <span class="topbar-note">ghibli / 10 films</span>
       <div class="header-actions">
         <button id="collectionButton" type="button" aria-expanded="false" aria-controls="collectionPanel">collection <span class="badge">10</span></button>
-        <button id="pairsButton" type="button" hidden>relate films</button>
+        <button id="pairsButton" type="button" hidden>label groups</button>
         <button id="mapButton" class="primary" type="button" hidden>view map ↗</button>
         <button id="personButton" class="quiet" type="button" hidden aria-label="Change participant"></button>
       </div>
     </header>
     <nav class="frame-bar" aria-label="Session progress">
-      <span id="phase">a few connections to start</span>
-      <span id="progressText">your interpretation, one pair at a time</span>
+      <span id="phase">01 / discover connections</span>
+      <span id="progressText">your interpretation, one group at a time</span>
     </nav>
     <section id="canvas" class="canvas">
       <section id="welcome" class="welcome">
         <div class="welcome-films" aria-hidden="true"><img src="./posters/0.jpg" alt=""><img src="./posters/1.jpg" alt=""><img src="./posters/2.jpg" alt=""></div>
         <form id="nameForm" class="name-form">
           <h2>what’s your name?</h2>
-          <p>we’ll look at two films at a time.<br>name a connection, or skip if nothing comes to mind.</p>
+          <p>start with small groups of Ghibli films.<br>name what connects them, then shape your own map.</p>
           <label class="sr-only" for="personName">your name</label>
           <input id="personName" maxlength="60" autocomplete="given-name" placeholder="your name" required>
-          <button class="primary" type="submit">start relating →</button>
-          <small>your name and connections stay in this browser.</small>
+          <button class="primary" type="submit">start exploring →</button>
+          <small>your name, labels and ratings stay in this browser.</small>
         </form>
       </section>
+      <section id="groupView" class="group-view" hidden></section>
       <section id="pairView" class="pair-view" hidden>
         <div class="pair-top"><button id="previousPair" class="quiet" type="button">← previous</button><span id="pairNumber"></span><span class="pair-top-spacer" aria-hidden="true"></span></div>
         <div id="pairFilms" class="pair-films"></div>
@@ -52,20 +53,25 @@
       <section id="mapView" class="map-view" hidden>
         <aside class="map-sidebar" tabindex="0" aria-label="Map controls and personal relationships">
           <h2 id="mapTitle">your map</h2>
-          <p class="sidebar-note">similar labels share a theme magnet. related themes can cluster through meaning and shared movies. films are pulled toward their themes. hover a poster to see its connections.</p>
-          <label class="magnet-visibility"><input id="showMagnets" type="checkbox" checked> show magnets</label>
+          <button id="addMagnet" type="button">+ add magnet</button><div id="ratingLinks"></div><label class="magnet-visibility"><input id="showMagnets" type="checkbox" checked> show magnets</label>
           <section class="source magnet-count-control"><label for="magnetCount">number of magnets <output id="magnetCountValue" for="magnetCount">0</output></label><input id="magnetCount" type="range" min="1" max="1" value="1" disabled><p id="magnetCountHint">add labels to create themes</p><p>fewer magnets group labels into broader themes and rearrange the films.</p></section>
-          <div class="section-heading">influence <span>relative weights</span></div>
+          <section id="umapControls" class="umap-controls" aria-label="Map exploration">
+            <div class="section-heading">explore the map <span>UMAP</span></div>
+            <div class="source"><label for="umapNeighbors">neighborhood size <output id="umapNeighborsValue">4</output></label><input id="umapNeighbors" type="range" min="2" max="9" step="1" value="4"><p>small: focus on closest neighbors. large: consider more of the collection.</p></div>
+            <div class="source"><label for="umapMinDist">packing <output id="umapMinDistValue">0.20</output></label><input id="umapMinDist" type="range" min="0" max="0.99" step="0.01" value="0.2"><p>low: allow tight clusters. high: leave more room between points.</p></div>
+            <div class="umap-actions"><button id="umapReshuffle" type="button">try another layout</button><button id="umapReset" type="button">reset</button></div>
+            <p id="umapHint" class="small-note">these controls change the computational layout; your ratings and magnets still influence placement. gaps aren’t proof of separate groups.</p>
+          </section><div class="section-heading">influence <span>relative weights</span></div>
           <div id="sliders"></div><p class="small-note">drag themes to move them. click one to inspect its original labels or separate a grouping. similar meaning does not always mean the same thing, and it does not establish opposites.</p>
-          <p class="small-note">skipping adds no direct label. other connections can still reveal shared themes. poster appearance is not compared.</p>
-          <div class="section-heading"><span>your relationships</span><span id="connectionCount"></span></div>
-          <div id="contributions" class="contributions"></div>
-          <button id="resetMagnets" class="text-button" type="button">reset magnet positions</button><br><button id="continuePairs" class="text-button" type="button">keep relating films →</button>
+          <p class="small-note">skip groups that don’t connect for you. a rating of zero adds no connection to that magnet. poster controls compare the artwork, not the film itself.</p>
+          <div class="section-heading" hidden><span>your relationships</span><span id="connectionCount"></span></div>
+          <div id="contributions" class="contributions" hidden></div>
+          <button id="resetMagnets" class="text-button" type="button">reset magnet positions</button><br><button id="continuePairs" class="text-button" type="button">revisit groups →</button>
         </aside>
         <div class="map-stage">
           <div id="map" class="map" tabindex="0" aria-label="Film relationship map. Pinch to zoom; drag the canvas to move."><div id="mapWorld" class="map-world"></div></div>
           <div class="map-tools"><button id="zoomOut" type="button" aria-label="Zoom out">−</button><button id="zoomReset" type="button" aria-label="Reset map view">100%</button><button id="zoomIn" type="button" aria-label="Zoom in">+</button></div>
-          <div class="map-legend"><span>— named relationship</span><span>┄ inferred connection</span><span>hover a poster for lines / tap on touch</span><span>pinch to zoom · drag to move</span></div>
+          <div class="map-legend"><span>┄ inferred connection</span><span>hover a poster for lines / tap on touch</span><span>pinch to zoom · drag to move</span></div>
           <div id="modelStatus" class="model-status" role="status"></div><button id="retryLabels" class="retry-labels" type="button" hidden>retry label comparison</button><details id="labelErrorDetails" class="label-error" hidden><summary>why comparison failed</summary><p id="labelErrorMessage"></p></details>
           <label class="pair-picker" for="pairSelect">inspect any pair<select id="pairSelect"></select></label>
         </div>
@@ -77,10 +83,14 @@
   <dialog id="participantDialog" class="participant-dialog"><form id="participantForm"><h2>who’s relating?</h2><p>use a different name to start a separate map. existing maps stay saved in this browser.</p><label for="newName">name</label><input id="newName" maxlength="60" required><div class="dialog-actions"><button id="nameScreen" class="quiet" type="button">name screen</button><button id="cancelParticipant" type="button">cancel</button><button type="submit" class="primary">open map</button></div></form></dialog>
   <script src="./films.js"></script>
   <script src="./synopsis-scores.js"></script>
+  <script src="./media-scores.js"></script>
   <script src="./personal-similarity.js"></script>
   <script src="./theme-preferences.js"></script>
   <script src="./map-navigation.js"></script>
   <script src="./movie-layout.js"></script>
+  <script src="./grouping.js"></script>
+  <script src="./vendor/umap-js-1.4.0.min.js"></script>
+  <script src="./umap-layout.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
